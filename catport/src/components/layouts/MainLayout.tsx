@@ -36,7 +36,7 @@ const MainLayout: React.FC<LayoutProps> = ({ children }) => {
             onClick: handleToggle,
             style: { color: "#fff"}
           })}
-          <span style={{ color: 'white', marginLeft: '20px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>Pharmacy Order & Operations System</span>
+          <span style={{ color: 'white', marginLeft: '20px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>CatHUB</span>
         </Header>
         <Content style={{ margin: '24px 16px', padding: 24, minHeight: "calc(100vh - 114px)", background: "#fff" }}>
           {children}
