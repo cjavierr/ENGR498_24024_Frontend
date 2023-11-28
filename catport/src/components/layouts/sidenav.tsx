@@ -3,6 +3,7 @@ import { Menu} from 'antd';
 import {
     HomeOutlined,
     ProjectOutlined,
+    UnorderedListOutlined,
   } from '@ant-design/icons';
 import {useNavigate}  from 'react-router';
 const SideNav = () => {
@@ -13,6 +14,9 @@ const SideNav = () => {
     }
     const handleCreateProjectClick = () => {
         history('/createProject');
+    }
+    const handleCreateSubCategoriesClick = () => {
+        history('/createSubcategories');
     }
     return (
         <div style={{background: "#000000" }}>
@@ -33,6 +37,10 @@ const SideNav = () => {
                 <Menu.Item key="2" onClick={handleCreateProjectClick} >
                     <ProjectOutlined/>
                     <span> Create Projects</span>
+                </Menu.Item>
+                <Menu.Item key="3" onClick={handleCreateSubCategoriesClick} >
+                    <UnorderedListOutlined/>
+                    <span> Create Subcategories</span>
                 </Menu.Item>
             </Menu>
         </div>

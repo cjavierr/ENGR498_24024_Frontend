@@ -62,7 +62,7 @@ const CreateSubcategories: React.FC = () => {
           rules={[{ required: true, message: 'Please select subcategory types!' }]}
         >
           <Select mode="multiple" onChange={(values) => setSubcategoryTypes(values)}>
-            <Option value="type1">Type 1</Option>
+            <Option value="type1">Roles</Option>
             <Option value="type2">Type 2</Option>
           </Select>
         </Form.Item>
