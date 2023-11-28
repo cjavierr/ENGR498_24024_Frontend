@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
-import { Button, Input, Select, Typography, Form, Row, Col, Divider } from 'antd';
+import { Button, Input, Select, Typography, Form, Divider } from 'antd';
 
 const { Option } = Select;
 
-const SubcategoryPage: React.FC = () => {
+const CreateSubcategories: React.FC = () => {
+  const [subcategoryTypes, setSubcategoryTypes] = useState<string[]>([]);
   const [elements, setElements] = useState<string[]>([]);
+  const [newElement, setNewElement] = useState<string>('');
 
-  const handleAddElement = (element: string) => {
-    setElements([...elements, element]);
+  const handleAddElement = () => {
+    if (newElement.trim() !== '') {
+      setElements([...elements, newElement]);
+      setNewElement('');
+    }
   };
 
   const onFinish = (values: any) => {
@@ -17,9 +22,32 @@ const SubcategoryPage: React.FC = () => {
 
   return (
     <div>
-      <Typography.Title level={2} style={{ textAlign: 'center' }}>
-        Subcategory Page
+      <Typography.Title level={2} style={{ textAlign: 'center', marginBottom: '20px' }}>
+        Create Subcategory List
       </Typography.Title>
+
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'center',
+          marginBottom: '20px',
+        }}
+      >
+        <div
+          style={{
+            borderRight: '1px solid #ddd',
+            paddingRight: '10px',
+            marginRight: '10px',
+          }}
+        >
+          <Typography.Title level={4}>Org Name - xyz<br></br>Org Admin - xyz </Typography.Title>
+        </div>
+        <div>
+          <Typography.Title level={4}>Subcategory number - SC001</Typography.Title>
+        </div>
+      </div>
 
       <Form
         name="subcategoryForm"
@@ -27,13 +55,13 @@ const SubcategoryPage: React.FC = () => {
         labelCol={{ span: 6 }}
         wrapperCol={{ span: 12 }}
       >
-        
+        {/* Subcategory Types */}
         <Form.Item
-          label="Subcategory Types"
+          label="Subcategory Type"
           name="subcategoryTypes"
           rules={[{ required: true, message: 'Please select subcategory types!' }]}
         >
-          <Select mode="multiple">
+          <Select mode="multiple" onChange={(values) => setSubcategoryTypes(values)}>
             <Option value="type1">Type 1</Option>
             <Option value="type2">Type 2</Option>
           </Select>
@@ -41,24 +69,29 @@ const SubcategoryPage: React.FC = () => {
 
         {/* Subcategory Elements */}
         <Divider orientation="left">Subcategory Elements</Divider>
-        <Row gutter={8}>
-          <Col span={16}>
-            <Form.Item
-              name="elements"
-              noStyle
-            >
-              <Input.Group compact>
-                <Input
-                  placeholder="Enter Element"
-                  onChange={(e) => handleAddElement(e.target.value)}
-                />
-                <Button type="primary" onClick={() => handleAddElement('New Element')}>
-                  Add Element
-                </Button>
-              </Input.Group>
-            </Form.Item>
-          </Col>
-        </Row>
+        {elements.map((element, index) => (
+          <Form.Item
+            key={index}
+            name={['elements', index]}
+            initialValue={element}
+            wrapperCol={{ offset: 6, span: 12 }}
+            style={{ marginBottom: 0 }}
+          >
+            <Input placeholder="Enter Element" />
+          </Form.Item>
+        ))}
+        <Form.Item wrapperCol={{ offset: 6, span: 12 }}>
+          <Input.Group>
+            <Input
+              placeholder="Enter Element"
+              value={newElement}
+              onChange={(e) => setNewElement(e.target.value)}
+            />
+            <Button type="primary" onClick={handleAddElement}>
+              Add Element
+            </Button>
+          </Input.Group>
+        </Form.Item>
 
         {/* Subcategory Notes */}
         <Divider orientation="left">Subcategory Notes</Divider>
@@ -80,4 +113,4 @@ const SubcategoryPage: React.FC = () => {
   );
 };
 
-export default SubcategoryPage;
+export default CreateSubcategories;
