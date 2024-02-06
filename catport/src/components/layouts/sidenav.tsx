@@ -18,6 +18,12 @@ const SideNav = () => {
     const handleCreateSubCategoriesClick = () => {
         history('/createSubcategories');
     }
+    const handleCreateProjectListingClick = () => {
+        history('/createProjectListing');
+    }
+    const handleCreateManageDashboardClick = () => {
+        history('/createManageDashboard');
+    }
     return (
         <div style={{background: "#000000" }}>
 
@@ -41,6 +47,14 @@ const SideNav = () => {
                 <Menu.Item key="3" onClick={handleCreateSubCategoriesClick} >
                     <UnorderedListOutlined/>
                     <span> Create Subcategories</span>
+                </Menu.Item>
+                <Menu.Item key="4" onClick={handleCreateProjectListingClick} >
+                    <UnorderedListOutlined/>
+                    <span> Project Listing</span>
+                </Menu.Item>
+                <Menu.Item key="5" onClick={handleCreateManageDashboardClick} >
+                    <UnorderedListOutlined/>
+                    <span> Manage Dashboards</span>
                 </Menu.Item>
             </Menu>
         </div>
