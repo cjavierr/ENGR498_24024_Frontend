@@ -4,7 +4,7 @@ import { Button, Row, Col } from 'antd';
 const Home = () => {
   return (
     <div style={{ textAlign: 'center', padding: '20px' }}>
-      <h1>Welcome Ibby! 👋</h1>
+      <h1>Welcome</h1>
 
       <Row gutter={[16, 16]} justify="center">
         <Col span={12}>
