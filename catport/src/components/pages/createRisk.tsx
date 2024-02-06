@@ -1,0 +1,126 @@
+import React from 'react';
+import { Form, Input, DatePicker, Select, Button, Typography, Row, Col } from 'antd';
+
+const { TextArea } = Input;
+const { Option } = Select;
+const { Title } = Typography;
+
+const CreateRisk: React.FC = () => {
+  const onFinish = (values: any) => {
+    console.log('Received values of form: ', values);
+  };
+
+  return (
+    <div style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 'calc(100vh - 114px)' }}>
+      <Row justify="center">
+        <Col span={24} style={{ textAlign: 'center' }}>
+          <Title level={2}>Create Risks</Title>
+        </Col>
+      </Row>
+      <Form
+        name="createRisk"
+        onFinish={onFinish}
+        layout="vertical"
+        style={{ maxWidth: '1000px', margin: '0 auto' }}
+      >
+        <Row gutter={24}>
+          <Col span={12}>
+          <Form.Item
+              label="Record Number"
+              name="recordNumber"
+              rules={[{ required: true, message: 'Please input the record number!' }]}
+            >
+              <Input placeholder="Enter Record Number" />
+            </Form.Item>
+
+            <Form.Item
+              label="Project Name"
+              name="projectName"
+              rules={[{ required: true, message: 'Please input the project name!' }]}
+            >
+              <Input placeholder="Enter Project Name" />
+            </Form.Item>
+
+            <Form.Item
+              label="Risk ID"
+              name="riskId"
+            >
+              <Input placeholder="Enter Risk ID" />
+            </Form.Item>
+
+            <Form.Item
+              label="Risk Name"
+              name="riskName"
+              rules={[{ required: true, message: 'Please input the risk name!' }]}
+            >
+              <Input placeholder="Enter Risk Name" />
+            </Form.Item>
+
+            <Form.Item
+              label="Description"
+              name="description"
+            >
+              <TextArea rows={4} placeholder="Enter Description" />
+            </Form.Item>
+
+            <Form.Item label="Date Created" name="dateCreated">
+              <DatePicker style={{ width: '100%' }} />
+            </Form.Item>
+
+            <Form.Item label="Last Updated" name="lastUpdated">
+              <DatePicker style={{ width: '100%' }} />
+            </Form.Item>
+          </Col>
+          <Col span={12}>
+          <Form.Item label="Duration (days)" name="duration">
+              <Input placeholder="Enter Duration" />
+            </Form.Item>
+
+            <Form.Item label="Clear by Date" name="clearByDate">
+              <DatePicker style={{ width: '100%' }} />
+            </Form.Item>
+
+            <Form.Item label="Likelihood" name="likelihood">
+              <Select placeholder="Select Likelihood">
+                <Option value="certain">Certain</Option>
+                <Option value="likely">Likely</Option>
+                <Option value="moderate">Moderate</Option>
+                <Option value="unlikely">Unlikely</Option>
+                <Option value="rare">Rare</Option>
+              </Select>
+            </Form.Item>
+
+            <Form.Item label="Consequence" name="consequence">
+              <Select placeholder="Select Consequence">
+                <Option value="insignificant">Insignificant</Option>
+                <Option value="minor">Minor</Option>
+                <Option value="moderate">Moderate</Option>
+                <Option value="major">Major</Option>
+                <Option value="catastrophic">Catastrophic</Option>
+              </Select>
+            </Form.Item>
+
+            <Form.Item label="Ranking" name="ranking">
+              <Select placeholder="Select Ranking">
+                <Option value="high">High</Option>
+                <Option value="medium">Medium</Option>
+                <Option value="low">Low</Option>
+              </Select>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row justify="center">
+          <Col span={24} style={{ textAlign: 'center' }}>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Form.Item>
+          </Col>
+        </Row>
+      </Form>
+    </div>
+  );
+};
+
+export default CreateRisk;
