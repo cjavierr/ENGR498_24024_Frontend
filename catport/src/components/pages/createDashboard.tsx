@@ -35,7 +35,7 @@ const CreateDashboard = () => {
     return (
       <div>
         <Typography.Title level={2} style={{ textAlign: 'center' }}>
-          Project Page
+          Create Dashboard
         </Typography.Title>
   
         <Form
