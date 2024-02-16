@@ -30,7 +30,7 @@ const CreateRisk: React.FC = () => {
               name="recordNumber"
               rules={[{ required: true, message: 'Please input the record number!' }]}
             >
-              <Input placeholder="Enter Record Number" />
+              <Input placeholder="Auto-Generate Record Number" />
             </Form.Item>
 
             <Form.Item
