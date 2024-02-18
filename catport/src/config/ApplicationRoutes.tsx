@@ -9,12 +9,16 @@ import ProjectListing from '../components/pages/createProjectListing';
 import ManageDashboard from '../components/pages/createManageDashboard';
 import CreateRisk from '../components/pages/createRisk';
 import ManageRisk from '../components/pages/createManageRisk';
+import LoginPage from '../components/pages/logIn';
+import SignUp from '../components/pages/signup';
 
 
 const ApplicationRoutes: React.FC = () => {
 
   return (
     <Routes>
+      <Route path = "/" element={<LoginPage />} />
+      <Route path="/signup" element={<SignUp />} />
       <Route
         path="*"
         element={
