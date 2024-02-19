@@ -53,7 +53,9 @@ const SignUp: React.FC = () => {
 
     const handleSubmit = async (values: any) => {
         try {
-            const response = await axios.post('http://localhost:3001/api/newuser', values);
+            const response = await axios.post('http://localhost:3001/api/newuser', values, {
+              withCredentials: true
+          });
             console.log('Received response from server: ', response.data);
             navigate('/login');
         } catch (error) {
@@ -127,6 +129,21 @@ const SignUp: React.FC = () => {
         <Input />
       </Form.Item>
 
+      <Form.Item
+        name="firstName"
+        label="First Name"
+        rules={[{ required: true, message: 'Please input your first name!', whitespace: true }]}
+      >
+        <Input />
+      </Form.Item>
+
+      <Form.Item
+        name="lastName"
+        label="Last Name"
+        rules={[{ required: true, message: 'Please input your last name!', whitespace: true }]}
+      >
+        <Input />
+      </Form.Item>
       <Form.Item {...tailFormItemLayout}>
         <Button type="primary" htmlType="submit">
           Register

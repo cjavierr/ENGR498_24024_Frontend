@@ -9,20 +9,21 @@ const LoginPage: React.FC = () => {
   const onSignup = () => {
     navigate('/signup');
   }
-    const onFinish = async (values: any) => {
-        try {
-            const response = await axios.post('http://localhost:3001/api/login', {
-                userName: values.username,
-                password: values.password
-            }, {
-                withCredentials: true
-            });
-            console.log('Received values of form: ', values);
-            navigate('/home');
-        } catch (error) {
-            console.error('Error signing in:', error);
-        }
-    };
+  
+  const onFinish = async (values: any) => {
+      try {
+          const response = await axios.post('http://localhost:3001/api/login', {
+              userName: values.username,
+              password: values.password
+          }, {
+              withCredentials: true
+          });
+          console.log('Received values of form: ', values);
+          navigate('/home');
+      } catch (error) {
+          console.error('Error signing in:', error);
+      }
+  };
 
 
   return (
