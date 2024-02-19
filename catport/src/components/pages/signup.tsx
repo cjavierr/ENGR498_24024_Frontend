@@ -12,6 +12,7 @@ import {
   Row,
   Select,
 } from 'antd';
+import { useNavigate } from 'react-router';
 import axios from 'axios';
 
 const { Option } = Select;
@@ -48,11 +49,13 @@ const tailFormItemLayout = {
 
 const SignUp: React.FC = () => {
   const [form] = Form.useForm();
+  const navigate = useNavigate();
 
     const handleSubmit = async (values: any) => {
         try {
-            const response = await axios.post('http://localhost:8000/signup', values);
+            const response = await axios.post('http://localhost:3001/api/newuser', values);
             console.log('Received response from server: ', response.data);
+            navigate('/login');
         } catch (error) {
             console.error('Error occurred while submitting form: ', error);
         }
@@ -116,7 +119,7 @@ const SignUp: React.FC = () => {
       </Form.Item>
 
       <Form.Item
-        name="username"
+        name="userName"
         label="Username"
         tooltip="Username used at sign up"
         rules={[{ required: true, message: 'Please input your username!', whitespace: true }]}
