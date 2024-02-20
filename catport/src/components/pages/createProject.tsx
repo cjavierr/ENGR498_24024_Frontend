@@ -1,11 +1,43 @@
 import React from 'react';
+import {useState} from 'react';
 import { Form, Input, Button, Select, Typography, Checkbox } from 'antd';
+import axios from 'axios';
 
 const { Option } = Select;
 
 const CreateProject: React.FC = () => {
+  const [projectType, setProjectType] = useState([]);
   const onFinish = (values: any) => {
+    const fields = [];
+
+    if(values.quantitativeFields !== undefined) {
+      for (const field of values.quantitativeFields || []) {
+        fields.push({ title: field, type: 'quantitative' });
+      }
+    }
+
+    if(values.qualitativeFields !== undefined) {
+      for (const field of values.qualitativeFields || []) {
+        fields.push({ title: field, type: 'qualitative' });
+      }
+    }
+
+    console.log('Fields:', fields);
+    const responseObject = {
+      projectName: values.projectName,
+      listKPIs: fields,
+      projectDescription: values.projectDescription,
+    }
+    console.log('Response Object:', responseObject);
     console.log('Received values:', values);
+
+    axios.post('http://localhost:3001/api/createNewProject', responseObject, { withCredentials: true })
+      .then(response => {
+        console.log('API response:', response.data);
+      })
+      .catch(error => {
+        console.error('API error:', error);
+      });
   };
 
   return (
@@ -21,10 +53,12 @@ const CreateProject: React.FC = () => {
     >
       <Form.Item
         label="Type"
-        name="type"
         rules={[{ required: true, message: 'Please input project type!' }]}
       >
-        <Input />
+        <Select mode="multiple">
+          <Option value="quantitative">Quantitative</Option>
+          <Option value="quanlitative">Qualitative</Option>
+        </Select>
       </Form.Item>
 
       <Form.Item
@@ -36,38 +70,28 @@ const CreateProject: React.FC = () => {
       </Form.Item>
 
       <Form.Item
-        label="Record Number"
-        name="recordNumber"
-        rules={[{ required: true, message: 'Please input the Record Number!' }]}
-      >
-        <Input />
-      </Form.Item>
-
-      <Form.Item
         label="Quantitative Fields"
         name="quantitativeFields"
-        rules={[{ required: true, message: 'Please select Fields to Add!' }]}
       >
         <Select mode="multiple">
-          <Option value="field1">Planned Forecast</Option>
-          <Option value="field2">Budget Forecast</Option>
+          <Option value="plannedForecast">Planned Forecast</Option>
+          <Option value="budgetForecast">Budget Forecast</Option>
         </Select>
       </Form.Item>
 
       <Form.Item
         label="Qualitative Fields"
         name="qualitativeFields"
-        rules={[{ required: true, message: 'Please select Fields to Add!' }]}
       >
         <Select mode="multiple">
-          <Option value="field1">Risks</Option>
-          <Option value="field2">Accomplisments</Option>
+          <Option value="risks">Risks</Option>
+          <Option value="accomplishments">Accomplisments</Option>
         </Select>
       </Form.Item>
 
       <Form.Item
-        label="Notes to Add"
-        name="notesToAdd"
+        label="Org / Project description"
+        name="projectDescription"
       >
         <Input.TextArea />
       </Form.Item>

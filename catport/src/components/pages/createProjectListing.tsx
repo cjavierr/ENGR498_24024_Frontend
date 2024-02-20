@@ -114,6 +114,18 @@ const ProjectListing: React.FC = () => {
     // Add more columns as needed
   ];
 
+  type Pr = {
+    key: string;
+    recordNumber: string;
+    owner: string;
+    ownerOrg: string;
+    dashboardNumber: string;
+    dashboardName: string;
+    dateCreated: string;
+    lastUpdated: string;
+    escalate: string;
+  };
+
   const data: Pr[] = [
     // Sample data
     { key: '1', recordNumber: '001', owner: 'Derrick', ownerOrg: '793-BEM', dashboardNumber: 'CAT-001-D1001', dashboardName: 'LMT-793-BEM', dateCreated: '5/1/2023', lastUpdated: '6/1/2023', escalate: 'No' },

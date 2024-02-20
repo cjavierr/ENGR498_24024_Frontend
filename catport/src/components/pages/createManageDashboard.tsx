@@ -1,7 +1,9 @@
 import React from "react";
+import { useEffect, useState } from 'react';
 import { Table, Button, Input, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { ColumnType } from "antd/es/table";
+import axios from "axios";
 
 const { Option } = Select;
 
@@ -59,24 +61,39 @@ function tableColumnTextFilterConfig<T>(): ColumnType<T> {
 }
 
 const ManageDashboard: React.FC = () => {
+  const [projects, setProjects] = useState([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:3001/api/readUserProjects', { withCredentials: true })
+      .then(response => {
+        const projectsWithOwners = response.data.projects.map((project: { projectUsers: any[]; }) => {
+          const owner = project.projectUsers.find(user => user.role === 'owner');
+          return { ...project, projectOwner: owner.userID };
+        });
+
+        setProjects(projectsWithOwners);
+      })
+      .catch(error => {
+        console.error('Error fetching projects:', error);
+      });
+  }, []);
+
   const columns: ColumnType<DashboardRecord>[] = [
     {
       title: "Record Number",
-      dataIndex: "recordNumber",
+      dataIndex: "projectID",
       key: "recordNumber",
       ...tableColumnTextFilterConfig<DashboardRecord>(),
-      onFilter: (value, record) => record.recordNumber.toLowerCase().includes(value.toLowerCase()),
     },
     {
       title: "Owner Org / Project Name",
-      dataIndex: "ownerOrg",
+      dataIndex: "projectName",
       key: "ownerOrg",
       ...tableColumnTextFilterConfig<DashboardRecord>(),
-      // Define other filters similarly
     },
     {
         title: "Owner",
-        dataIndex: "owner",
+        dataIndex: "projectOwner",
         key: "owner",
         ...tableColumnTextFilterConfig<DashboardRecord>(),
         // Define other filters similarly
@@ -117,7 +134,7 @@ const ManageDashboard: React.FC = () => {
     // Add more data records as needed
   ];
 
-  return <Table columns={columns} dataSource={data} />;
+  return <Table columns={columns} dataSource={projects} />;
 };
 
 export default ManageDashboard;
