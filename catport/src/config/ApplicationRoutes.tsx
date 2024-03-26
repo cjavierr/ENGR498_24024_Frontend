@@ -11,6 +11,7 @@ import CreateRisk from '../components/pages/createRisk';
 import ManageRisk from '../components/pages/createManageRisk';
 import LoginPage from '../components/pages/logIn';
 import SignUp from '../components/pages/signup';
+import Dashboard from '../components/pages/dashboard';
 
 
 const ApplicationRoutes: React.FC = () => {
@@ -32,6 +33,7 @@ const ApplicationRoutes: React.FC = () => {
                 <Route path="/createManageDashboard" element={<ManageDashboard />} />
                 <Route path="/createRisk" element={<CreateRisk />} />
                 <Route path="/createManageRisk" element={<ManageRisk />} />
+                <Route path="/dashboard" element={<Dashboard />} />
               </Routes>
             </MainLayout>
         }
