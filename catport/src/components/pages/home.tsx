@@ -1,5 +1,15 @@
 import React from 'react';
+
 import { Button, Row, Col } from 'antd';
+import GetUser from '../../GetUser';
+import CreateUser from '../../CreateUser';
+import CreateProject from '../../CreateProject';
+import CreateDashboard from '../../CreateDashboard';
+import Login from '../../Login';
+import AddProjectToUser from '../../AddProjectToUser';
+import AddUserToProject from '../../AddUserToProject';
+import GetProject from '../../GetProject';
+import GetDashboard from '../../GetDashboard';
 
 const Home = () => {
   return (
@@ -17,7 +27,6 @@ const Home = () => {
             My Project Listings
           </Button>
         </Col>
-
         <Col span={12}>
           <Button type="default" block>
             Manage Risks and Issues
@@ -28,11 +37,32 @@ const Home = () => {
             Manage Higher Level Action Request
           </Button>
         </Col>
-
         <Col span={12}>
-          <Button type="default" block>
-            Manage Lessons Learned
-          </Button>
+          <GetUser />
+        </Col>
+        <Col span={12}>
+          <CreateUser />
+        </Col>
+        <Col span={12}>
+          <CreateProject />
+        </Col>
+        <Col span={12}>
+          <CreateDashboard />
+        </Col>
+        <Col span={12}>
+          <Login />
+        </Col>
+        <Col span={12}>
+          <AddProjectToUser />
+        </Col>
+        <Col span={12}>
+          <AddUserToProject />
+        </Col>
+        <Col span={12}>
+          <GetProject />
+        </Col>
+        <Col span={12}>
+          <GetDashboard />
         </Col>
       </Row>
     </div>
