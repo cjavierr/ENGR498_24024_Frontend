@@ -24,13 +24,10 @@ interface RiskRecord {
 
 const ManageRisk: React.FC = () => {
   const columns: ColumnsType<RiskRecord> = [
-    // ... Define columns based on the structure from the image
-    // Example column definition:
     {
         title: 'Record Number',
         dataIndex: 'recordNumber',
         key: 'recordNumber',
-        // Assume that we might want to add filters or sorters later
       },
       {
         title: 'Owner',
@@ -124,6 +121,23 @@ const ManageRisk: React.FC = () => {
   const data: RiskRecord[] = [
     {
         key: '1',
+        recordNumber: 'CAT-001',
+        owner: 'Sardar',
+        projectName: '793-BEM',
+        riskNumber: 'CAT-001-R001',
+        riskName: 'Risk 1',
+        dateCreated: '01/03/2023',
+        lastUpdated: '02/11/2023',
+        duration: '60 Days',
+        clearBy: '03/04/2024',
+        probability: 'Likely',
+        impact: 'Minor',
+        ranking: 'Low',
+        riskStage: 'New',
+        escalate: 'No',
+      },
+      {
+        key: '2',
         recordNumber: 'CAT-001',
         owner: 'Sardar',
         projectName: '793-BEM',

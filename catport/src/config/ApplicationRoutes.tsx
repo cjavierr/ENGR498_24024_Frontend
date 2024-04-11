@@ -5,10 +5,10 @@ import CreateProject from '../components/pages/createProject';
 import MainLayout from '../components/layouts/MainLayout'; 
 import CreateDashboard from '../components/pages/createDashboard';
 import CreateSubcategories from '../components/pages/createSubcategories';
-import ProjectListing from '../components/pages/createProjectListing';
+import ProjectListing from '../components/pages/projectListing';
 import ManageDashboard from '../components/pages/createManageDashboard';
 import CreateRisk from '../components/pages/createRisk';
-import ManageRisk from '../components/pages/createManageRisk';
+import ManageRisk from '../components/pages/manageRisk';
 import LoginPage from '../components/pages/logIn';
 import SignUp from '../components/pages/signup';
 import Dashboard from '../components/pages/dashboard';
@@ -29,10 +29,10 @@ const ApplicationRoutes: React.FC = () => {
                 <Route path="/createProject" element={<CreateProject />} />
                 <Route path="/createDashboard" element={<CreateDashboard />} />
                 <Route path="/createSubcategories" element={<CreateSubcategories />} />
-                <Route path="/createProjectListing" element={<ProjectListing />} />
+                <Route path="/projectListing" element={<ProjectListing />} />
                 <Route path="/createManageDashboard" element={<ManageDashboard />} />
                 <Route path="/createRisk" element={<CreateRisk />} />
-                <Route path="/createManageRisk" element={<ManageRisk />} />
+                <Route path="/manageRisk" element={<ManageRisk />} />
                 <Route path="/dashboard" element={<Dashboard />} />
               </Routes>
             </MainLayout>

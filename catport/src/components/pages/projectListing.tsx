@@ -2,6 +2,7 @@ import React from "react";
 import { Table, Button, Input, Select } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { ColumnType } from "antd/es/table";
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 
@@ -19,7 +20,12 @@ interface ProjectRecord {
 
 // Function to generate table column with text filter
 function tableColumnTextFilterConfig<T>(): ColumnType<T> {
-  const searchInputHolder: { current: Input | null } = { current: null };
+  const searchInputHolder: { current: typeof Input | null } = { current: null };
+  const history = useNavigate();
+
+  const handleRiskClick = (projectNumber: any) => {
+    history('/createRisk', { state: { projectNumber } });
+  };
 
   return {
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -114,7 +120,7 @@ const ProjectListing: React.FC = () => {
     // Add more columns as needed
   ];
 
-  const data: Pr[] = [
+  const data: any[] = [
     // Sample data
     { key: '1', recordNumber: '001', owner: 'Derrick', ownerOrg: '793-BEM', dashboardNumber: 'CAT-001-D1001', dashboardName: 'LMT-793-BEM', dateCreated: '5/1/2023', lastUpdated: '6/1/2023', escalate: 'No' },
     { key: '2', recordNumber: '002', owner: 'Derrick', ownerOrg: '794-BEM', dashboardNumber: 'CAT-001-D1002', dashboardName: 'LMT-794-BEM', dateCreated: '6/1/2023', lastUpdated: '6/1/2023', escalate: 'No' },

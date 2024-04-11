@@ -18,8 +18,8 @@ const SideNav = () => {
     const handleCreateSubCategoriesClick = () => {
         history('/createSubcategories');
     }
-    const handleCreateProjectListingClick = () => {
-        history('/createProjectListing');
+    const handleProjectListingClick = () => {
+        history('/projectListing');
     }
     const handleCreateDashboardClick = () => {
         history('/createDashboard');
@@ -30,8 +30,8 @@ const SideNav = () => {
     const handleCreateRiskClick = () => {
         history('/createRisk');
     }
-    const handleCreateManageRiskClick = () => {
-        history('/createManageRisk');
+    const handleManageRiskClick = () => {
+        history('/manageRisk');
     }
     return (
         <div style={{background: "#000000" }}>
@@ -61,7 +61,7 @@ const SideNav = () => {
                     <UnorderedListOutlined/>
                     <span> Create Dashboard</span>
                 </Menu.Item>
-                <Menu.Item key="5" onClick={handleCreateProjectListingClick} >
+                <Menu.Item key="5" onClick={handleProjectListingClick} >
                     <UnorderedListOutlined/>
                     <span> Project Listing</span>
                 </Menu.Item>
@@ -73,7 +73,7 @@ const SideNav = () => {
                     <UnorderedListOutlined/>
                     <span> Create Risk</span>
                 </Menu.Item>
-                <Menu.Item key="8" onClick={handleCreateManageRiskClick} >
+                <Menu.Item key="8" onClick={handleManageRiskClick} >
                     <UnorderedListOutlined/>
                     <span> Manage Risk</span>
                 </Menu.Item>
