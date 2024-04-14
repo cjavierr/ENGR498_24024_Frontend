@@ -1,6 +1,7 @@
 import React from 'react';
 import { Table, Button, Tag, Space, Select } from 'antd';
 import { ColumnsType } from 'antd/es/table';
+import axios from 'axios';
 
 const { Option } = Select;
 
@@ -22,7 +23,27 @@ interface RiskRecord {
   escalate: string;
 }
 
+
 const ManageRisk: React.FC = () => {
+  const getRisks = async () => {
+    try {
+      const response = await axios.get('http://localhost:3001/api/getRisks', { withCredentials: true });
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  
+  const [data1, setData1] = React.useState<RiskRecord[]>([]);
+  
+  React.useEffect(() => {
+    const fetchData = async () => {
+      const result = await getRisks();
+      setData1(result);
+    };
+  
+    fetchData();
+  }, []);
   const columns: ColumnsType<RiskRecord> = [
     {
         title: 'Record Number',
@@ -53,16 +74,6 @@ const ManageRisk: React.FC = () => {
         title: 'Date Created',
         dataIndex: 'dateCreated',
         key: 'dateCreated',
-      },
-      {
-        title: 'Last Updated',
-        dataIndex: 'lastUpdated',
-        key: 'lastUpdated',
-      },
-      {
-        title: 'Duration',
-        dataIndex: 'duration',
-        key: 'duration',
       },
       {
         title: 'Clear By',
@@ -158,7 +169,7 @@ const ManageRisk: React.FC = () => {
   return (
     <Table
       columns={columns}
-      dataSource={data}
+      dataSource={data1}
       pagination={false}
       bordered
       title={() => 'Manage Risks'}

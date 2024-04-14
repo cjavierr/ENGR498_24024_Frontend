@@ -1,13 +1,24 @@
 import React from 'react';
 import { Form, Input, DatePicker, Select, Button, Typography, Row, Col } from 'antd';
+import axios from 'axios';
+import { useLocation } from 'react-router-dom';
 
 const { TextArea } = Input;
 const { Option } = Select;
 const { Title } = Typography;
 
 const CreateRisk: React.FC = () => {
-  const onFinish = (values: any) => {
-    console.log('Received values of form: ', values);
+  const location = useLocation();
+  const projectID = location.state.recordNumber;
+  console.log("create risk: " + projectID);
+
+  const onFinish = (values: any) => { 
+    axios.post('http://localhost:3001/api/addKPI', {"newEntry" : values,
+      "projectID": projectID,
+      "tableName": "Risks"
+    })
+      .then((res: any) => console.log(res.data))
+      .catch((err: any) => console.error(err));
   };
 
   return (
@@ -42,13 +53,6 @@ const CreateRisk: React.FC = () => {
             </Form.Item>
 
             <Form.Item
-              label="Risk ID"
-              name="riskId"
-            >
-              <Input placeholder="Enter Risk ID" />
-            </Form.Item>
-
-            <Form.Item
               label="Risk Name"
               name="riskName"
               rules={[{ required: true, message: 'Please input the risk name!' }]}
@@ -67,14 +71,8 @@ const CreateRisk: React.FC = () => {
               <DatePicker style={{ width: '100%' }} />
             </Form.Item>
 
-            <Form.Item label="Last Updated" name="lastUpdated">
-              <DatePicker style={{ width: '100%' }} />
-            </Form.Item>
           </Col>
           <Col span={12}>
-          <Form.Item label="Duration (days)" name="duration">
-              <Input placeholder="Enter Duration" />
-            </Form.Item>
 
             <Form.Item label="Clear by Date" name="clearByDate">
               <DatePicker style={{ width: '100%' }} />
