@@ -42,6 +42,10 @@ const handleRiskClick = (recordNumber: any) => {
   console.log(recordNumber)
     history('/createRisk', { state: { recordNumber } });
   };
+
+const handleManageRiskClick = () => {
+  history('/manageRisk');
+};
   const columns: ColumnType<ProjectRecord>[] = [
     {
       title: "Record Number",
@@ -68,26 +72,23 @@ const handleRiskClick = (recordNumber: any) => {
         dataIndex: "dashboardName",
         key: "dashboardName",
       },
-      // {
-      //   title: "Date Created",
-      //   dataIndex: "dateCreated",
-      //   key: "dateCreated",
-      // },
-      // {
-      //   title: "Last Updated",
-      //   dataIndex: "lastUpdated",
-      //   key: "lastUpdated",
-      // },
       {
         title: "Escalate",
         dataIndex: "escalate",
         key: "escalate",
       },
       {
-        title: 'Edit Risks',
+        title: 'Create Risks',
         key: 'edit',
         render: (text: any, record: any) => (
-          <Button onClick={() => handleRiskClick(record.recordNumber)}>Edit Risks</Button>
+          <Button onClick={() => handleRiskClick(record.recordNumber)}>Create Risks</Button>
+        ),
+      },
+      {
+        title: 'Manage Risks',
+        key: 'manage',
+        render: (text: any, record: any) => (
+          <Button onClick={() => handleManageRiskClick()}>Manage Risks</Button>
         ),
       },
       

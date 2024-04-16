@@ -2,12 +2,14 @@ import React from 'react';
 import { Form, Input, DatePicker, Select, Button, Typography, Row, Col } from 'antd';
 import axios from 'axios';
 import { useLocation } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 const { TextArea } = Input;
 const { Option } = Select;
 const { Title } = Typography;
 
 const CreateRisk: React.FC = () => {
+  const history = useNavigate();
   const location = useLocation();
   const projectID = location.state.recordNumber;
   const randomNum = Math.floor(Math.random() * 900) + 100; // generates a random 3-digit number
@@ -18,9 +20,10 @@ const CreateRisk: React.FC = () => {
     axios.post('http://localhost:3001/api/addKPI', {"newEntry" : values,
       "projectID": projectID,
       "tableName": "Risks"
-    })
+    }, { withCredentials: true })
       .then((res: any) => console.log(res.data))
       .catch((err: any) => console.error(err));
+      history('/manageRisk')
   };
 
   return (

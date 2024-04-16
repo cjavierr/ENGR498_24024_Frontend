@@ -61,11 +61,6 @@ const ManageRisk: React.FC = () => {
         key: 'projectName',
       },
       {
-        title: 'Risk Number',
-        dataIndex: 'riskNumber',
-        key: 'riskNumber',
-      },
-      {
         title: 'Risk Name',
         dataIndex: 'riskName',
         key: 'riskName',
@@ -104,10 +99,10 @@ const ManageRisk: React.FC = () => {
         title: 'Escalate',
         dataIndex: 'escalate',
         key: 'escalate',
-        render: escalate => (
-          <Tag color={escalate === 'Yes' ? 'volcano' : 'green'}>
-            {escalate}
-          </Tag>
+        render: (escalate) => (
+          <Button type="primary">
+            escalate
+          </Button>
         ),
       },
       {
@@ -173,37 +168,6 @@ const ManageRisk: React.FC = () => {
       pagination={false}
       bordered
       title={() => 'Manage Risks'}
-      footer={() => (
-        <Space>
-          <Select defaultValue="" style={{ width: 150 }}>
-            {/* Dropdown options can be dynamically generated based on data */}
-            <Option value="selectProbability">- Select Probability -</Option>
-            <Option value="certain">Certain</Option>
-            <Option value="likely">Likely</Option>
-            <Option value="likely">Moderate</Option>
-            <Option value="moderate">Unlikely</Option>
-            <Option value="certain">Rare</Option>
-          </Select>
-          <Select defaultValue="" style={{ width: 150 }}>
-            <Option value="selectImpact">- Select Impact -</Option>
-            <Option value="insignificant">Insignificant</Option>
-            <Option value="minor">Minor</Option>
-            <Option value="moderate1">Moderate</Option>
-            <Option value="major">Major</Option>
-            <Option value="catastrophic">Catastrophic</Option>
-            {/* ...other options */}
-          </Select>
-          <Select defaultValue="" style={{ width: 150 }}>
-            <Option value="selectRank">- Select Rank -</Option>
-            <Option value="low">Low</Option>
-            <Option value="moderate2">Moderate</Option>
-            <Option value="high">High</Option>
-            <Option value="extreme">Extreme</Option>
-            {/* ...other options */}
-          </Select>
-          <Button>- Select Risk Stage -</Button>
-        </Space>
-      )}
     />
   );
 };

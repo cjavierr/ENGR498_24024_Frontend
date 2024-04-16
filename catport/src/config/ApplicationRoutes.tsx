@@ -6,7 +6,7 @@ import MainLayout from '../components/layouts/MainLayout';
 import CreateDashboard from '../components/pages/createDashboard';
 import CreateSubcategories from '../components/pages/createSubcategories';
 import ProjectListing from '../components/pages/projectListing';
-import ManageDashboard from '../components/pages/createManageDashboard';
+// import ManageDashboard from '../components/pages/createManageDashboard';
 import CreateRisk from '../components/pages/createRisk';
 import ManageRisk from '../components/pages/manageRisk';
 import LoginPage from '../components/pages/logIn';
@@ -30,7 +30,7 @@ const ApplicationRoutes: React.FC = () => {
                 <Route path="/createDashboard" element={<CreateDashboard />} />
                 <Route path="/createSubcategories" element={<CreateSubcategories />} />
                 <Route path="/projectListing" element={<ProjectListing />} />
-                <Route path="/createManageDashboard" element={<ManageDashboard />} />
+                
                 <Route path="/createRisk" element={<CreateRisk />} />
                 <Route path="/manageRisk" element={<ManageRisk />} />
                 <Route path="/dashboard" element={<Dashboard />} />
