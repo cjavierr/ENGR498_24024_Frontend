@@ -10,6 +10,8 @@ const { Title } = Typography;
 const CreateRisk: React.FC = () => {
   const location = useLocation();
   const projectID = location.state.recordNumber;
+  const randomNum = Math.floor(Math.random() * 900) + 100; // generates a random 3-digit number
+  const recordNum = projectID + "-" + randomNum;
   console.log("create risk: " + projectID);
 
   const onFinish = (values: any) => { 
@@ -39,9 +41,9 @@ const CreateRisk: React.FC = () => {
           <Form.Item
               label="Record Number"
               name="recordNumber"
-              rules={[{ required: true, message: 'Please input the record number!' }]}
+              initialValue={recordNum}
             >
-              <Input placeholder="Auto-Generate Record Number" />
+              <Input disabled/>
             </Form.Item>
 
             <Form.Item
@@ -68,17 +70,17 @@ const CreateRisk: React.FC = () => {
             </Form.Item>
 
             <Form.Item label="Date Created" name="dateCreated">
-              <DatePicker style={{ width: '100%' }} />
+              <DatePicker style={{ width: '100%' }} format="MM-DD-YYYY"  />
             </Form.Item>
 
           </Col>
           <Col span={12}>
 
-            <Form.Item label="Clear by Date" name="clearByDate">
-              <DatePicker style={{ width: '100%' }} />
+            <Form.Item label="Clear by Date" name="clearBy">
+              <DatePicker style={{ width: '100%' }} format="MM-DD-YYYY"  />
             </Form.Item>
 
-            <Form.Item label="Likelihood" name="likelihood">
+            <Form.Item label="Likelihood" name="probability">
               <Select placeholder="Select Likelihood">
                 <Option value="certain">Certain</Option>
                 <Option value="likely">Likely</Option>
@@ -88,7 +90,7 @@ const CreateRisk: React.FC = () => {
               </Select>
             </Form.Item>
 
-            <Form.Item label="Consequence" name="consequence">
+            <Form.Item label="Consequence" name="impact">
               <Select placeholder="Select Consequence">
                 <Option value="insignificant">Insignificant</Option>
                 <Option value="minor">Minor</Option>
@@ -103,6 +105,14 @@ const CreateRisk: React.FC = () => {
                 <Option value="high">High</Option>
                 <Option value="medium">Medium</Option>
                 <Option value="low">Low</Option>
+              </Select>
+            </Form.Item>
+
+            <Form.Item label="Risk Stage" name="riskStage">
+              <Select placeholder="Select stage">
+                <Option value="New">New</Option>
+                <Option value="Work in Progress">Work in Progress</Option>
+                <Option value="Solved and closed">Solved and Closed</Option>
               </Select>
             </Form.Item>
           </Col>

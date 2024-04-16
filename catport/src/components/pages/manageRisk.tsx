@@ -34,12 +34,12 @@ const ManageRisk: React.FC = () => {
     }
   };
   
-  const [data1, setData1] = React.useState<RiskRecord[]>([]);
+  const [data, setData] = React.useState<RiskRecord[]>([]);
   
   React.useEffect(() => {
     const fetchData = async () => {
       const result = await getRisks();
-      setData1(result);
+      setData(result.risks);
     };
   
     fetchData();
@@ -129,47 +129,47 @@ const ManageRisk: React.FC = () => {
 },
 ];
 
-  const data: RiskRecord[] = [
-    {
-        key: '1',
-        recordNumber: 'CAT-001',
-        owner: 'Sardar',
-        projectName: '793-BEM',
-        riskNumber: 'CAT-001-R001',
-        riskName: 'Risk 1',
-        dateCreated: '01/03/2023',
-        lastUpdated: '02/11/2023',
-        duration: '60 Days',
-        clearBy: '03/04/2024',
-        probability: 'Likely',
-        impact: 'Minor',
-        ranking: 'Low',
-        riskStage: 'New',
-        escalate: 'No',
-      },
-      {
-        key: '2',
-        recordNumber: 'CAT-001',
-        owner: 'Sardar',
-        projectName: '793-BEM',
-        riskNumber: 'CAT-001-R001',
-        riskName: 'Risk 1',
-        dateCreated: '01/03/2023',
-        lastUpdated: '02/11/2023',
-        duration: '60 Days',
-        clearBy: '03/04/2024',
-        probability: 'Likely',
-        impact: 'Minor',
-        ranking: 'Low',
-        riskStage: 'New',
-        escalate: 'No',
-      }
-  ];
+  // const data: RiskRecord[] = [
+  //   {
+  //       key: '1',
+  //       recordNumber: 'CAT-001',
+  //       owner: 'Sardar',
+  //       projectName: '793-BEM',
+  //       riskNumber: 'CAT-001-R001',
+  //       riskName: 'Risk 1',
+  //       dateCreated: '01/03/2023',
+  //       lastUpdated: '02/11/2023',
+  //       duration: '60 Days',
+  //       clearBy: '03/04/2024',
+  //       probability: 'Likely',
+  //       impact: 'Minor',
+  //       ranking: 'Low',
+  //       riskStage: 'New',
+  //       escalate: 'No',
+  //     },
+  //     {
+  //       key: '2',
+  //       recordNumber: 'CAT-001',
+  //       owner: 'Sardar',
+  //       projectName: '793-BEM',
+  //       riskNumber: 'CAT-001-R001',
+  //       riskName: 'Risk 1',
+  //       dateCreated: '01/03/2023',
+  //       lastUpdated: '02/11/2023',
+  //       duration: '60 Days',
+  //       clearBy: '03/04/2024',
+  //       probability: 'Likely',
+  //       impact: 'Minor',
+  //       ranking: 'Low',
+  //       riskStage: 'New',
+  //       escalate: 'No',
+  //     }
+  // ];
 
   return (
     <Table
       columns={columns}
-      dataSource={data1}
+      dataSource={data}
       pagination={false}
       bordered
       title={() => 'Manage Risks'}
