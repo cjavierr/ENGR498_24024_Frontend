@@ -1,5 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import '../../App.css'; // Import the CSS file
+import type { Button, Form, Input, Select, Space } from 'antd';
+
+const layout = {
+  labelCol: {
+    span: 8,
+  },
+  wrapperCol: {
+    span: 16,
+  },
+};
+const tailLayout = {
+  wrapperCol: {
+    offset: 8,
+    span: 16,
+  },
+};
+
 
 function CreateProject() {
   const [projectName, setProjectName] = useState('');
@@ -12,6 +30,9 @@ function CreateProject() {
   const [additionalNotes, setAdditionalNotes] = useState('');
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [userID, setUserID] = useState('');
+  const [username, setUsername] = useState('');
+
 
   const quantitativeKPIOptions = [
     'Revenue - Actual - $',
@@ -43,6 +64,30 @@ function CreateProject() {
     'Request Action Item'
   ];
 
+  const fetchData = async () => {
+    const username = localStorage.getItem('loggedInUser');
+    if (!username) return; // Skip request if username is empty
+
+    try {
+      console.log("attempting to make post request");
+      const response = await axios.post('http://localhost:3001/api/getUser', {
+        username: username, // Send username in request body
+      });
+      console.log(response);
+      setUserID(response.data.userID);
+
+      setError(null);
+    } catch (error) {
+      console.error('Error:', error);
+      setError(error.message || 'An error occurred.'); // Handle potential errors
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, [username]); // Re-run on username change
+
+
   const handleQuantitativeKPIChange = (event) => {
     const selectedKPIs = Array.from(event.target.selectedOptions, option => option.value);
     setQuantitativeKPIs(selectedKPIs);
@@ -65,6 +110,7 @@ function CreateProject() {
     try {
       const response = await axios.post('http://localhost:3001/api/createNewProject', {
         projectName,
+        userID,
         projectDescription,
         haveHigherLevelOrg,
         higherLevelOrgOwner,

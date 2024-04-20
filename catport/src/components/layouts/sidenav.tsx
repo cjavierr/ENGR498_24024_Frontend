@@ -6,6 +6,8 @@ import {
     UnorderedListOutlined,
   } from '@ant-design/icons';
 import {useNavigate}  from 'react-router';
+import MergeDashboards from '../pages/MergeDashboards';
+import DashboardPage from '../pages/DashboardPage';
 const SideNav = () => {
     const history = useNavigate();
 
@@ -22,7 +24,7 @@ const SideNav = () => {
         history('/createProjectListing');
     }
     const handleCreateDashboardClick = () => {
-        history('/createDashboard');
+        history('/CreateDashboard');
     }
     const handleCreateManageDashboardClick = () => {
         history('/createManageDashboard');
@@ -32,6 +34,12 @@ const SideNav = () => {
     }
     const handleCreateManageRiskClick = () => {
         history('/createManageRisk');
+    }
+    const handleViewDashboardClick = () => {
+        history('/dashboardPage');
+    }
+    const handleMergeDashboardClick = () => {
+        history('/mergeDashboard');
     }
     return (
         <div style={{background: "#000000" }}>
@@ -76,6 +84,14 @@ const SideNav = () => {
                 <Menu.Item key="8" onClick={handleCreateManageRiskClick} >
                     <UnorderedListOutlined/>
                     <span> Manage Risk</span>
+                </Menu.Item>
+                <Menu.Item key="9" onClick={handleMergeDashboardClick} >
+                    <UnorderedListOutlined/>
+                    <span> Merge Dashboards</span>
+                </Menu.Item>
+                <Menu.Item key="10" onClick={handleViewDashboardClick} >
+                    <UnorderedListOutlined/>
+                    <span> View Dashboard</span>
                 </Menu.Item>
             </Menu>
         </div>

@@ -11,6 +11,7 @@ function Login() {
     const storedUser = localStorage.getItem('loggedInUser');
     if (storedUser) {
       setIsLoggedIn(true);
+      setUsername(localStorage.getItem('loggedInUser'));
     }
   }, []); // Empty dependency array to run only on initial render
 

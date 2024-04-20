@@ -5,10 +5,47 @@ const CreateDashboard = () => {
   const [dashboardName, setDashboardName] = useState('');
   const [userID, setUserID] = useState('');
   const [accessUserIDs, setAccessUserIDs] = useState([]);
-  const [projects, setProjects] = useState([{ projectID: '', quantitativeKPIs: [], qualitativeKPIs: [] }]);
+  const [items, setItems] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [username, setUsername] = useState('');
+  const [projectIDs, setProjectIDs] = useState([]);
+
+
+
+  const fetchData = async () => {
+    const username = localStorage.getItem('loggedInUser');
+    if (!username) return; // Skip request if username is empty
+
+    try {
+      console.log("attempting to make post request");
+      const response = await axios.post('http://localhost:3001/api/getUser', {
+        username: username, // Send username in request body
+      });
+      console.log(response);
+      setUserID(response.data.userID);
+      setProjectIDs(response.data.projects);
+      setError(null);
+    } catch (error) {
+      console.error('Error:', error);
+      setError(error.message || 'An error occurred.'); // Handle potential errors
+    }
+  };
+
+  useEffect(() => {
+    const fetchProjectIDs = async () => {
+      try {
+        const response = await axios.get('http://localhost:3001/api/allProjectIDs');
+        setProjectIDs(response.data.projectIDs);
+      } catch (error){
+        console.error('Error fetching project IDs: ', error);
+      }
+    };
+    fetchProjectIDs();
+    fetchData();
+  }, [username]); // Re-run on username change
+
 
   const handleAddAccessUserID = () => {
     setAccessUserIDs([...accessUserIDs, '']);
@@ -20,25 +57,25 @@ const CreateDashboard = () => {
     setAccessUserIDs(updatedAccessUserIDs);
   };
 
-  const handleAddProject = () => {
-    setProjects([...projects, { projectID: '', quantitativeKPIs: [], qualitativeKPIs: [] }]);
+  const handleAddItem = () => {
+    setItems([...items, { type: 'project', id: '', quantitativeKPIs: [], qualitativeKPIs: [] }]);
   };
 
-  const handleProjectChange = async (index, field, value) => {
-    const updatedProjects = [...projects];
-    updatedProjects[index][field] = value;
-    setProjects(updatedProjects);
+  const handleItemChange = async (index, field, value) => {
+    const updatedItems = [...items];
+    updatedItems[index][field] = value;
+    setItems(updatedItems);
 
-    if (field === 'projectID') {
-      // Fetch quantitative and qualitative KPIs for the project
+    if (field === 'id') {
+      // Fetch KPIs for the project or dashboard
       try {
         const response = await axios.post('http://localhost:3001/api/getProject', { projectId: value });
         const projectData = response.data;
 
-        // Update the project's KPIs with the fetched data
-        updatedProjects[index].quantitativeKPIs = projectData.quantitativeKPIs;
-        updatedProjects[index].qualitativeKPIs = projectData.qualitativeKPIs;
-        setProjects(updatedProjects);
+        // Update the item's KPIs with the fetched data
+        updatedItems[index].quantitativeKPIs = projectData.quantitativeKPIs;
+        updatedItems[index].qualitativeKPIs = projectData.qualitativeKPIs;
+        setItems(updatedItems);
       } catch (error) {
         console.error('Error fetching project:', error);
         // Handle error appropriately
@@ -58,7 +95,7 @@ const CreateDashboard = () => {
         dashboardName,
         userID,
         accessUserIDs,
-        projects
+        items
       });
 
       setSuccessMessage(response.data.message);
@@ -110,38 +147,48 @@ const CreateDashboard = () => {
       </div>
 
       <div>
-        <h3>Projects:</h3>
-        {projects.map((project, index) => (
-          <div key={index}>
-            <input
-              type="text"
-              placeholder="Project ID"
-              value={project.projectID}
-              onChange={(e) => handleProjectChange(index, 'projectID', e.target.value)}
-              required
-            />
-            {/* Render checkboxes for selecting quantitative and qualitative KPIs */}
+      <h3>Items:</h3>
+      {items.map((item, index) => (
+        <div key={index}>
+          <label>Type:</label>
+          <select value={item.type} onChange={(e) => handleItemChange(index, 'type', e.target.value)}>
+            <option value="project">Project</option>
+            <option value="dashboard">Dashboard</option>
+          </select>
+          <label htmlFor="projectID">Select Project:</label>
+          {projectIDs.length > 0 ? ( // Conditionally render the dropdown menu when projectIDs are available
+            <select id="projectID" value={item.id} onChange={(e) => handleItemChange(index, 'id', e.target.value)} required>
+              <option value="">Select a project</option>
+              {projectIDs.map((projectID) => (
+                <option key={projectID} value={projectID}>{projectID}</option>
+              ))}
+            </select>
+          ) : (
+            <p>Loading project IDs...</p>
+          )}
+            {/* Render checkboxes for selecting quantitative KPIs */}
             <div>
               <h4>Quantitative KPIs:</h4>
-              {project.quantitativeKPIs.map((kpi, kpiIndex) => (
+              {item.quantitativeKPIs.map((kpi, kpiIndex) => (
                 <div key={kpiIndex}>
                   <input type="checkbox" id={`qKPI_${index}_${kpiIndex}`} />
-                  <label htmlFor={`qKPI_${index}_${kpiIndex}`}>{kpi.name}: {kpi.value}</label>
+                  <label htmlFor={`qKPI_${index}_${kpiIndex}`}>{kpi.name}</label>
                 </div>
               ))}
             </div>
+            {/* Render checkboxes for selecting qualitative KPIs */}
             <div>
               <h4>Qualitative KPIs:</h4>
-              {project.qualitativeKPIs.map((kpi, kpiIndex) => (
+              {item.qualitativeKPIs.map((kpi, kpiIndex) => (
                 <div key={kpiIndex}>
                   <input type="checkbox" id={`qualKPI_${index}_${kpiIndex}`} />
-                  <label htmlFor={`qualKPI_${index}_${kpiIndex}`}>{kpi.name}: {kpi.value}</label>
+                  <label htmlFor={`qualKPI_${index}_${kpiIndex}`}>{kpi.name}</label>
                 </div>
               ))}
             </div>
           </div>
         ))}
-        <button type="button" onClick={handleAddProject}>Add Project</button>
+        <button type="button" onClick={handleAddItem}>Add Item</button>
       </div>
 
       {isLoading && <p>Loading...</p>}
