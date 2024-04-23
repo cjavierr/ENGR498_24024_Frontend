@@ -111,13 +111,7 @@ const ManageRisk: React.FC = () => {
         render: (_, record) => (
           <div>
       <div style={{ marginBottom: '8px' }}>
-        <Button type="primary">Convert to Issues</Button>
-      </div>
-      <div style={{ marginBottom: '8px' }}>
-        <Button>View</Button>
-      </div>
-      <div>
-        <Button danger>Delete</Button>
+        <Button type="primary">Edit Risk</Button>
       </div>
     </div>
   ),
