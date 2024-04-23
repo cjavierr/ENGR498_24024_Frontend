@@ -16,7 +16,9 @@ import AddUserToProject from '../components/pages/AddUserToProject';
 import GetProject from '../components/pages/GetProject';
 import DashboardPage from '../components/pages/DashboardPage';
 import MergeDashboards from '../components/pages/MergeDashboards';
-
+import ProjectView from '../components/pages/Project';
+import ProjectsView from '../components/pages/ProjectsView';
+import EditProject from '../components/pages/EditProject';
 
 const ApplicationRoutes: React.FC = () => {
 
@@ -30,12 +32,16 @@ const ApplicationRoutes: React.FC = () => {
               <Routes>
                 <Route path="/home" element={<Home />} />
                 <Route path="/createProject" element={<CreateProject />} />
-                <Route path="/createDashboard" element={<CreateDashboard />} />
+                <Route path="/createDashboard/:projectId" element={<CreateDashboard />} />
                 <Route path="/createSubcategories" element={<CreateSubcategories />} />
                 <Route path="/createRisk" element={<CreateRisk />} />
                 <Route path="/createManageRisk" element={<ManageRisk />} />
                 <Route path="/mergeDashboard" element={<MergeDashboards />} />
                 <Route path="/dashboardPage" element={<DashboardPage />} />
+                <Route path="/CreateUser" element={<CreateUser />} />
+                <Route path="/ProjectView/:projectId" element={<ProjectView />} />
+                <Route path="/projects" element={<ProjectsView />} />
+                <Route path="/EditProject/:projectId" element={<EditProject />} />
 
               </Routes>
             </MainLayout>

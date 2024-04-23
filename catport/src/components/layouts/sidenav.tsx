@@ -6,8 +6,7 @@ import {
     UnorderedListOutlined,
   } from '@ant-design/icons';
 import {useNavigate}  from 'react-router';
-import MergeDashboards from '../pages/MergeDashboards';
-import DashboardPage from '../pages/DashboardPage';
+
 const SideNav = () => {
     const history = useNavigate();
 
@@ -41,6 +40,12 @@ const SideNav = () => {
     const handleMergeDashboardClick = () => {
         history('/mergeDashboard');
     }
+    const handleCreateUserClick = () => {
+        history('/CreateUser');
+    }
+    const handleProjectViewClick = () => {
+        history('/projects'); // Navigate to the projects route
+    }
     return (
         <div style={{background: "#000000" }}>
 
@@ -59,15 +64,11 @@ const SideNav = () => {
                 </Menu.Item>
                 <Menu.Item key="2" onClick={handleCreateProjectClick} >
                     <ProjectOutlined/>
-                    <span> Create Projects</span>
+                    <span> Create Project</span>
                 </Menu.Item>
                 <Menu.Item key="3" onClick={handleCreateSubCategoriesClick} >
                     <UnorderedListOutlined/>
                     <span> Create Subcategories</span>
-                </Menu.Item>
-                <Menu.Item key="4" onClick={handleCreateDashboardClick} >
-                    <UnorderedListOutlined/>
-                    <span> Create Dashboard</span>
                 </Menu.Item>
                 <Menu.Item key="5" onClick={handleCreateProjectListingClick} >
                     <UnorderedListOutlined/>
@@ -93,6 +94,14 @@ const SideNav = () => {
                     <UnorderedListOutlined/>
                     <span> View Dashboard</span>
                 </Menu.Item>
+                <Menu.Item key="11" onClick={handleCreateUserClick} >
+                <UnorderedListOutlined/>
+                <span> Create User</span>
+            </Menu.Item>
+            <Menu.Item key="12" onClick={handleProjectViewClick}>
+            <UnorderedListOutlined />
+            <span> Projects View</span>
+        </Menu.Item>
             </Menu>
         </div>
     );

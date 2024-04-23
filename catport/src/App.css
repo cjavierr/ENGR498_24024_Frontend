@@ -69,18 +69,8 @@ input[type="checkbox"] {
   margin-right: 5px;
 }
 
-button[type="submit"] {
-  padding: 10px 20px;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
 
-button[type="submit"]:hover {
-  background-color: #45a049;
-}
+
 
 .error-message,
 .success-message {
