@@ -1,5 +1,5 @@
 import React from "react";
-import { Table, Button, Input, Select } from "antd";
+import { Table, Button, Input, Select, InputRef } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
 import { ColumnType } from "antd/es/table";
 
@@ -8,7 +8,7 @@ const { Option } = Select;
 interface ProjectRecord {
   key: string;
   recordNumber: string;
-  owner: string
+  owner: string;
   ownerOrg: string;
   dashboardNumber: string;
   dashboardName: string;
@@ -19,7 +19,7 @@ interface ProjectRecord {
 
 // Function to generate table column with text filter
 function tableColumnTextFilterConfig<T>(): ColumnType<T> {
-  const searchInputHolder: { current: Input | null } = { current: null };
+  const searchInputHolder: { current: InputRef | null } = { current: null };
 
   return {
     filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
@@ -53,7 +53,7 @@ function tableColumnTextFilterConfig<T>(): ColumnType<T> {
     ),
     onFilterDropdownVisibleChange: (visible) => {
       if (visible) {
-        setTimeout(() => searchInputHolder.current?.select(), 100);
+        setTimeout(() => searchInputHolder.current?.focus(), 100);
       }
     },
   };
@@ -66,7 +66,10 @@ const ProjectListing: React.FC = () => {
       dataIndex: "recordNumber",
       key: "recordNumber",
       ...tableColumnTextFilterConfig<ProjectRecord>(),
-      onFilter: (value, record) => record.recordNumber.toLowerCase().includes(value.toLowerCase()),
+      onFilter: (value, record) =>
+        typeof value === 'string' &&
+        typeof record.recordNumber === 'string' &&
+        record.recordNumber.toLowerCase().includes(value.toLowerCase()),
     },
     {
       title: "Owner",
@@ -81,43 +84,62 @@ const ProjectListing: React.FC = () => {
       ...tableColumnTextFilterConfig<ProjectRecord>(),
     },
     {
-        title: "Dashboard Number",
-        dataIndex: "dashboardNumber",
-        key: "dashboardNumber",
-        ...tableColumnTextFilterConfig<ProjectRecord>(),
-      },
-      {
-        title: "Dashboard Name",
-        dataIndex: "dashboardName",
-        key: "dashboardName",
-        ...tableColumnTextFilterConfig<ProjectRecord>(),
-      },
-      {
-        title: "Date Created",
-        dataIndex: "dateCreated",
-        key: "dateCreated",
-        ...tableColumnTextFilterConfig<ProjectRecord>(),
-      },
-      {
-        title: "Last Updated",
-        dataIndex: "lastUpdated",
-        key: "lastUpdated",
-        ...tableColumnTextFilterConfig<ProjectRecord>(),
-      },
-      {
-        title: "Escalate",
-        dataIndex: "escalate",
-        key: "escalate",
-        ...tableColumnTextFilterConfig<ProjectRecord>(),
-        // Define other filters similarly
-      },
+      title: "Dashboard Number",
+      dataIndex: "dashboardNumber",
+      key: "dashboardNumber",
+      ...tableColumnTextFilterConfig<ProjectRecord>(),
+    },
+    {
+      title: "Dashboard Name",
+      dataIndex: "dashboardName",
+      key: "dashboardName",
+      ...tableColumnTextFilterConfig<ProjectRecord>(),
+    },
+    {
+      title: "Date Created",
+      dataIndex: "dateCreated",
+      key: "dateCreated",
+      ...tableColumnTextFilterConfig<ProjectRecord>(),
+    },
+    {
+      title: "Last Updated",
+      dataIndex: "lastUpdated",
+      key: "lastUpdated",
+      ...tableColumnTextFilterConfig<ProjectRecord>(),
+    },
+    {
+      title: "Escalate",
+      dataIndex: "escalate",
+      key: "escalate",
+      ...tableColumnTextFilterConfig<ProjectRecord>(),
+    },
     // Add more columns as needed
   ];
 
-  const data: Pr[] = [
+  const data: ProjectRecord[] = [
     // Sample data
-    { key: '1', recordNumber: '001', owner: 'Derrick', ownerOrg: '793-BEM', dashboardNumber: 'CAT-001-D1001', dashboardName: 'LMT-793-BEM', dateCreated: '5/1/2023', lastUpdated: '6/1/2023', escalate: 'No' },
-    { key: '2', recordNumber: '002', owner: 'Derrick', ownerOrg: '794-BEM', dashboardNumber: 'CAT-001-D1002', dashboardName: 'LMT-794-BEM', dateCreated: '6/1/2023', lastUpdated: '6/1/2023', escalate: 'No' },
+    {
+      key: '1',
+      recordNumber: '001',
+      owner: 'Derrick',
+      ownerOrg: '793-BEM',
+      dashboardNumber: 'CAT-001-D1001',
+      dashboardName: 'LMT-793-BEM',
+      dateCreated: '5/1/2023',
+      lastUpdated: '6/1/2023',
+      escalate: 'No',
+    },
+    {
+      key: '2',
+      recordNumber: '002',
+      owner: 'Derrick',
+      ownerOrg: '794-BEM',
+      dashboardNumber: 'CAT-001-D1002',
+      dashboardName: 'LMT-794-BEM',
+      dateCreated: '6/1/2023',
+      lastUpdated: '6/1/2023',
+      escalate: 'No',
+    },
     // Add more data records as needed
   ];
 

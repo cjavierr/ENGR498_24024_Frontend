@@ -33,6 +33,9 @@ const SideNav = () => {
     const handleCreateManageRiskClick = () => {
         history('/createManageRisk');
     }
+    const handleCreateMapSubcategories = () => {
+        history('/createMapSubcategories');
+    }
     return (
         <div style={{background: "#000000" }}>
 
@@ -76,6 +79,10 @@ const SideNav = () => {
                 <Menu.Item key="8" onClick={handleCreateManageRiskClick} >
                     <UnorderedListOutlined/>
                     <span> Manage Risk</span>
+                </Menu.Item>
+                <Menu.Item key="9" onClick={handleCreateMapSubcategories} >
+                    <UnorderedListOutlined/>
+                    <span> Map Subcategories</span>
                 </Menu.Item>
             </Menu>
         </div>

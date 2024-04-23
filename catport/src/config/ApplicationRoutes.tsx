@@ -9,6 +9,7 @@ import ProjectListing from '../components/pages/createProjectListing';
 import ManageDashboard from '../components/pages/createManageDashboard';
 import CreateRisk from '../components/pages/createRisk';
 import ManageRisk from '../components/pages/createManageRisk';
+import MapSubcategories from '../components/pages/createMapSubcategories';
 
 
 const ApplicationRoutes: React.FC = () => {
@@ -28,6 +29,7 @@ const ApplicationRoutes: React.FC = () => {
                 <Route path="/createManageDashboard" element={<ManageDashboard />} />
                 <Route path="/createRisk" element={<CreateRisk />} />
                 <Route path="/createManageRisk" element={<ManageRisk />} />
+                <Route path="/createMapSubcategories" element={<MapSubcategories />} />
               </Routes>
             </MainLayout>
         }

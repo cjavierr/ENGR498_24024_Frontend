@@ -1,113 +1,100 @@
 import React, { useState } from 'react';
-import { Button, Input, Select, Typography, Form, Divider } from 'antd';
+import { Button, Input, Typography, Form, Divider, Row, Col, message } from 'antd';
+import { PlusOutlined, DeleteOutlined } from '@ant-design/icons';
 
-const { Option } = Select;
+const { Title } = Typography;
+
+interface Element {
+  id: number;
+  value: string;
+}
 
 const CreateSubcategories: React.FC = () => {
-  const [subcategoryTypes, setSubcategoryTypes] = useState<string[]>([]);
-  const [elements, setElements] = useState<string[]>([]);
+  const [form] = Form.useForm();
+  const [elements, setElements] = useState<Element[]>([]);
   const [newElement, setNewElement] = useState<string>('');
 
   const handleAddElement = () => {
     if (newElement.trim() !== '') {
-      setElements([...elements, newElement]);
-      setNewElement('');
+      const exists = elements.some(element => element.value.trim() === newElement.trim());
+      if (!exists) {
+        const newId = elements.length > 0 ? elements[elements.length - 1].id + 1 : 0;
+        setElements([...elements, { id: newId, value: newElement }]);
+        setNewElement('');
+        message.success('Element added!');
+      } else {
+        message.error('Duplicate element not allowed.');
+      }
+    } else {
+      message.error('Please enter a valid element.');
     }
+  };
+
+  const handleDeleteElement = (id: number) => {
+    setElements(elements.filter(element => element.id !== id));
+    message.success('Element removed!');
   };
 
   const onFinish = (values: any) => {
     console.log('Received values:', values);
-    // Add your logic to save the subcategory
+    message.success('Subcategory saved!');
   };
 
   return (
-    <div>
-      <Typography.Title level={2} style={{ textAlign: 'center', marginBottom: '20px' }}>
+    <div style={{ padding: '24px', maxWidth: '800px', margin: '0 auto' }}>
+      <Title level={2} style={{ textAlign: 'center', marginBottom: '24px' }}>
         Create Subcategory List
-      </Typography.Title>
-
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginBottom: '20px',
-        }}
-      >
-        <div
-          style={{
-            borderRight: '1px solid #ddd',
-            paddingRight: '10px',
-            marginRight: '10px',
-          }}
-        >
-          <Typography.Title level={4}>Org Name - xyz<br></br>Org Admin - xyz </Typography.Title>
-        </div>
-        <div>
-          <Typography.Title level={4}>Subcategory number - SC001</Typography.Title>
-        </div>
-      </div>
-
+      </Title>
       <Form
+        form={form}
         name="subcategoryForm"
         onFinish={onFinish}
-        labelCol={{ span: 6 }}
-        wrapperCol={{ span: 12 }}
+        layout="vertical"
+        autoComplete="off"
       >
-        {/* Subcategory Types */}
-        <Form.Item
-          label="Subcategory Type"
-          name="subcategoryTypes"
-          rules={[{ required: true, message: 'Please select subcategory types!' }]}
-        >
-          <Select mode="multiple" onChange={(values) => setSubcategoryTypes(values)}>
-            <Option value="type1">Roles</Option>
-            <Option value="type2">Type 2</Option>
-          </Select>
-        </Form.Item>
-
-        {/* Subcategory Elements */}
-        <Divider orientation="left">Subcategory Elements</Divider>
-        {elements.map((element, index) => (
-          <Form.Item
-            key={index}
-            name={['elements', index]}
-            initialValue={element}
-            wrapperCol={{ offset: 6, span: 12 }}
-            style={{ marginBottom: 0 }}
-          >
-            <Input placeholder="Enter Element" />
-          </Form.Item>
-        ))}
-        <Form.Item wrapperCol={{ offset: 6, span: 12 }}>
-          <Input.Group>
+        <Divider orientation="center">Subcategory Elements</Divider>
+        {elements.map((element) => (
+  <Row key={element.id} justify="center" align="middle" gutter={16} style={{ marginBottom: '10px' }}>
+    <Col xs={24} sm={18} md={20} lg={21} xl={22}>
+      <Input value={element.value} readOnly />
+    </Col>
+    <Col xs={24} sm={6} md={4} lg={3} xl={2}>
+      <Button
+        danger
+        onClick={() => handleDeleteElement(element.id)}
+        icon={<DeleteOutlined />}
+        style={{ width: '100%' }}
+      />
+    </Col>
+  </Row>
+))}
+        <Row gutter={16}>
+          <Col span={18}>
             <Input
               placeholder="Enter Element"
               value={newElement}
               onChange={(e) => setNewElement(e.target.value)}
+              onPressEnter={handleAddElement}
             />
-            <Button type="primary" onClick={handleAddElement}>
+          </Col>
+          <Col span={6}>
+            <Button type="primary" onClick={handleAddElement} icon={<PlusOutlined />}>
               Add Element
             </Button>
-          </Input.Group>
-        </Form.Item>
-
-        {/* Subcategory Notes */}
-        <Divider orientation="left">Subcategory Notes</Divider>
+          </Col>
+        </Row>
+        <Divider orientation="center" style={{ margin: '24px 0' }}>Subcategory Notes</Divider>
         <Form.Item
+          name="notes"
           label="Notes"
-          name="subcategoryNotes"
         >
-          <Input.TextArea />
+          <Input.TextArea rows={4} placeholder="Enter any notes here" />
         </Form.Item>
-
-        {/* Other Controls */}
-        <Form.Item wrapperCol={{ offset: 6, span: 12 }}>
+        <Row justify="center">
           <Button type="primary" htmlType="submit">
             Save Subcategory
           </Button>
-        </Form.Item>
+        </Row>
       </Form>
     </div>
   );
