@@ -22,6 +22,7 @@ const MapSubcategories: React.FC = () => {
   const [selectedDashboards, setSelectedDashboards] = useState<string[]>([]);
   const [customGroups, setCustomGroups] = useState<{ name: string; subcategories: string[] }[]>([]);
   const [expandedGroups, setExpandedGroups] = useState<string[]>([]);
+  const [mappedSubcategoryName, setMappedSubcategoryName] = useState('');
 
   const handleDashboardChange = (selected: string[]) => {
     setSelectedDashboards(selected);
@@ -44,6 +45,7 @@ const MapSubcategories: React.FC = () => {
   };
 
   const saveMappedSubcategories = () => {
+    setExpandedGroups(customGroups.map(group => group.name));
     notification.success({
       message: 'Mapping Subcategories Success',
       description: 'Your custom subcategory mappings have been saved successfully.',
@@ -102,7 +104,7 @@ const MapSubcategories: React.FC = () => {
   const renderMappedSubcategories = () => {
     const columns = [
       {
-        title: 'Group Name',
+        title: mappedSubcategoryName,
         dataIndex: 'name',
         key: 'name',
         render: (name: string) => (
@@ -166,6 +168,13 @@ const MapSubcategories: React.FC = () => {
               <Option value="CAT-001-D1002">CAT-001-D1002</Option>
               <Option value="CAT-001-D1003">CAT-001-D1003</Option>
             </Select>
+          </Form.Item>
+          <Form.Item label="Mapped Subcategory Name" name="mappedSubcategoryName">
+            <Input
+              placeholder="Enter a name for the mapped subcategory"
+              value={mappedSubcategoryName}
+              onChange={e => setMappedSubcategoryName(e.target.value)}
+            />
           </Form.Item>
           {renderCustomGroupForm()}
           <Button type="dashed" onClick={addCustomGroup} icon={<PlusOutlined />} style={{ width: '100%' }}>

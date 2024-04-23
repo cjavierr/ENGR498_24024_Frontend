@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Form, InputNumber, Button, Select, Typography } from 'antd';
+import { Form, InputNumber, Button, Select, Typography, DatePicker } from 'antd';
 import Spreadsheet, { CellBase } from 'react-spreadsheet';
+import dayjs, { Dayjs } from 'dayjs';
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -15,6 +16,7 @@ interface QuantitativeField {
   timePhase: string;
   subcategories: string[];
   totalPeriods: number;
+  startDate: Dayjs;
 }
 
 const fieldNames = {
@@ -47,6 +49,7 @@ const CreateDashboard: React.FC = () => {
   const [selectedTimePhase, setSelectedTimePhase] = useState<string>('');
   const [selectedSubcategories, setSelectedSubcategories] = useState<string[]>([]);
   const [totalPeriods, setTotalPeriods] = useState<number>(0);
+  const [selectedStartDate, setSelectedStartDate] = useState<Dayjs | null>(null);
   const [quantitativeFields, setQuantitativeFields] = useState<QuantitativeField[]>([]);
 
   const dashboardStyle: React.CSSProperties = {
@@ -88,12 +91,17 @@ const CreateDashboard: React.FC = () => {
     }
   };
 
+  const onStartDateChange = (date: Dayjs | null) => {
+    setSelectedStartDate(date);
+  };
+
   const onSaveField = () => {
     if (
       selectedQuantitativeField &&
       selectedTimePhase &&
       selectedSubcategories.length > 0 &&
-      totalPeriods > 0
+      totalPeriods > 0 &&
+      selectedStartDate
     ) {
       const fieldName = fieldNames[selectedQuantitativeField as keyof typeof fieldNames] || selectedQuantitativeField;
       const data = generateSpreadsheetData(selectedSubcategories, totalPeriods, selectedTimePhase);
@@ -103,14 +111,16 @@ const CreateDashboard: React.FC = () => {
         timePhase: selectedTimePhase,
         subcategories: selectedSubcategories,
         totalPeriods,
+        startDate: selectedStartDate,
       };
       setQuantitativeFields([...quantitativeFields, newField]);
       setSelectedQuantitativeField('');
       setSelectedTimePhase('');
       setSelectedSubcategories([]);
       setTotalPeriods(0);
+      setSelectedStartDate(null);
     } else {
-      console.log('All form fields are required.'); // Added for debugging
+      console.log('All form fields are required.');
     }
   };
 
@@ -121,25 +131,6 @@ const CreateDashboard: React.FC = () => {
 
   const generateSpreadsheetData = (subcategories: string[], periods: number, timePhase: string): SpreadsheetData[][] => {
     const data: SpreadsheetData[][] = [];
-
-    // Generate column labels based on the selected time phase
-    const columnLabels = Array.from({ length: periods }, (_, index) => {
-      switch (timePhase) {
-        case 'Weekly':
-          return { value: `Week ${index + 1}` };
-        case 'Monthly':
-          return { value: `Month ${index + 1}` };
-        case 'Quarterly':
-          return { value: `Quarter ${index + 1}` };
-        case 'Annually':
-          return { value: `Year ${index + 1}` };
-        default:
-          return { value: `Period ${index + 1}` };
-      }
-    });
-
-    // Generate row labels based on the selected subcategories
-    const rowLabels = subcategories.map(subcategory => ({ value: subcategory }));
 
     // Create an empty data array with the correct dimensions
     const numRows = subcategories.length;
@@ -155,19 +146,35 @@ const CreateDashboard: React.FC = () => {
     return data;
   };
 
-  const generateColumnLabels = (periods: number, timePhase: string): string[] => {
-    switch (timePhase) {
-      case 'Weekly':
-        return Array.from({ length: periods }, (_, index) => `Week ${index + 1}`);
-      case 'Monthly':
-        return Array.from({ length: periods }, (_, index) => `Month ${index + 1}`);
-      case 'Quarterly':
-        return Array.from({ length: periods }, (_, index) => `Quarter ${index + 1}`);
-      case 'Annually':
-        return Array.from({ length: periods }, (_, index) => `Year ${index + 1}`);
-      default:
-        return Array.from({ length: periods }, (_, index) => `Period ${index + 1}`);
+  const generateColumnLabels = (startDate: Dayjs, periods: number, timePhase: string): string[] => {
+    const columnLabels: string[] = [];
+    let currentDate = startDate;
+  
+    for (let i = 0; i < periods; i++) {
+      switch (timePhase) {
+        case 'Weekly':
+          columnLabels.push(currentDate.format('MMM D, YYYY'));
+          currentDate = currentDate.add(1, 'week');
+          break;
+        case 'Monthly':
+          columnLabels.push(currentDate.format('MMM YYYY'));
+          currentDate = currentDate.add(1, 'month');
+          break;
+        case 'Quarterly':
+          columnLabels.push(`Q${Math.floor(currentDate.month() / 3) + 1} ${currentDate.format('YYYY')}`);
+          currentDate = currentDate.add(3, 'months');
+          break;
+        case 'Annually':
+          columnLabels.push(currentDate.format('YYYY'));
+          currentDate = currentDate.add(1, 'year');
+          break;
+        default:
+          columnLabels.push(`Period ${i + 1}`);
+          break;
+      }
     }
+  
+    return columnLabels;
   };
 
   const handleSpreadsheetChange = (fieldIndex: number, data: (SpreadsheetData | undefined)[][]) => {
@@ -211,6 +218,9 @@ const CreateDashboard: React.FC = () => {
                 <Option value="Annually">Annually</Option>
               </Select>
             </Form.Item>
+            <Form.Item label="Start Date" rules={[{ required: true, message: 'Please select a start date!' }]}>
+              <DatePicker value={selectedStartDate} onChange={onStartDateChange} />
+            </Form.Item>
             <Form.Item label="Subcategories" rules={[{ required: true, message: 'Please select at least one subcategory!' }]}>
               <Select mode="multiple" value={selectedSubcategories} onChange={onSubcategoriesChange}>
                 <Option value="Engineer 1">Engineer 1</Option>
@@ -240,7 +250,7 @@ const CreateDashboard: React.FC = () => {
                     <Spreadsheet
                       data={field.data}
                       onChange={(data: (SpreadsheetData | undefined)[][]) => handleSpreadsheetChange(index, data)}
-                      columnLabels={generateColumnLabels(field.totalPeriods, field.timePhase)}
+                      columnLabels={generateColumnLabels(field.startDate, field.totalPeriods, field.timePhase)}
                       rowLabels={field.subcategories}
                     />
                   </div>
