@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Form, InputNumber, Button, Select, Typography, DatePicker } from 'antd';
 import Spreadsheet, { CellBase } from 'react-spreadsheet';
 import dayjs, { Dayjs } from 'dayjs';
+import axios from 'axios';
 
 const { Option } = Select;
 const { Title } = Typography;
@@ -124,9 +125,22 @@ const CreateDashboard: React.FC = () => {
     }
   };
 
-  const onSaveDashboard = () => {
-    // Save the dashboard data (selectedProject and quantitativeFields) to a database or perform any other necessary actions
-    console.log('Dashboard saved:', { project: selectedProject, fields: quantitativeFields });
+  const onSaveDashboard = async () => {
+    try {
+      const dashboardDetails = {
+        dashboardName: selectedProject,
+        userID: 'user123', // Replace with the actual user ID
+        accessUserIDs: [], // Add any user IDs that should have access to the dashboard
+        projects: quantitativeFields,
+      };
+  
+      const response = await axios.post('/api/createDashboard', dashboardDetails);
+      console.log('Dashboard created:', response.data);
+      // Handle the successful creation of the dashboard (e.g., show a success message)
+    } catch (error) {
+      console.error('Error creating dashboard:', error);
+      // Handle the error (e.g., show an error message)
+    }
   };
 
   const generateSpreadsheetData = (subcategories: string[], periods: number, timePhase: string): SpreadsheetData[][] => {

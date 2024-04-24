@@ -36,6 +36,12 @@ const SideNav = () => {
     const handleCreateMapSubcategories = () => {
         history('/createMapSubcategories');
     }
+    const handleCreateMergedDashboard = () => {
+        history('/createMergedDashboard');
+    }
+    const handleCreateAdminHomePage = () => {
+        history('/createAdminHomePage');
+    }
     return (
         <div style={{background: "#000000" }}>
 
@@ -83,6 +89,14 @@ const SideNav = () => {
                 <Menu.Item key="9" onClick={handleCreateMapSubcategories} >
                     <UnorderedListOutlined/>
                     <span> Map Subcategories</span>
+                </Menu.Item>
+                <Menu.Item key="10" onClick={handleCreateMergedDashboard} >
+                    <UnorderedListOutlined/>
+                    <span> Merged Dashboard</span>
+                </Menu.Item>
+                <Menu.Item key="11" onClick={handleCreateAdminHomePage} >
+                    <UnorderedListOutlined/>
+                    <span> Admin Homepage</span>
                 </Menu.Item>
             </Menu>
         </div>
