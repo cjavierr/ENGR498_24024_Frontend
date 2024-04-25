@@ -27,9 +27,6 @@ const SideNav = () => {
     const handleCreateManageDashboardClick = () => {
         history('/createManageDashboard');
     }
-    const handleCreateRiskClick = () => {
-        history('/createRisk');
-    }
     const handleManageRiskClick = () => {
         history('/manageRisk');
     }
@@ -68,10 +65,6 @@ const SideNav = () => {
                 <Menu.Item key="6" onClick={handleCreateManageDashboardClick} >
                     <UnorderedListOutlined/>
                     <span> Manage Dashboards</span>
-                </Menu.Item>
-                <Menu.Item key="7" onClick={handleCreateRiskClick} >
-                    <UnorderedListOutlined/>
-                    <span> Create Risk</span>
                 </Menu.Item>
                 <Menu.Item key="8" onClick={handleManageRiskClick} >
                     <UnorderedListOutlined/>

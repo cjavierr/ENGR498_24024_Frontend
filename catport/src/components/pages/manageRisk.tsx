@@ -4,6 +4,7 @@ import { ColumnsType } from 'antd/es/table';
 import axios from 'axios';
 import cookie from 'cookie';
 import { Modal } from 'antd';
+import { useNavigate } from 'react-router-dom';
 
 const { Option } = Select;
 
@@ -33,6 +34,8 @@ const [visible, setVisible] = React.useState(false);
 const [selectedNote, setSelectedNote] = React.useState('');
 const [data, setData] = React.useState<RiskRecord[]>([]);
 
+const navigate = useNavigate();
+
 const showModal = (note: string) => {
   setSelectedNote(note);
   setVisible(true);
@@ -44,6 +47,9 @@ const handleOk = () => {
 
 const handleCancel = () => {
   setVisible(false);
+};
+const editRisk = (record: RiskRecord) => {
+  navigate('/editRisk', { state: { record } });
 };
 
   React.useEffect(() => {
@@ -68,6 +74,7 @@ const handleCancel = () => {
        await axios.post('http://localhost:3001/api/escalateRisk', {"riskID": recordNumber },{ withCredentials: true })
        .then((res: any) => console.log(res.data))
        .catch((err: any) => console.error(err));
+       navigate('/manageRisk')
     } catch (error) {
       console.error(error);
     }
@@ -77,6 +84,7 @@ const handleCancel = () => {
     if(currentUser) {
     const fetchData = async () => {
       const result = await getRisks();
+      const data = result.risks.map((risk: any) => ({ ...risk, record: risk }));
       setData(result.risks);
     };
     
@@ -155,7 +163,7 @@ const handleCancel = () => {
         render: (_, record) => (
           <div>
       <div style={{ marginBottom: '8px' }}>
-        <Button type="primary" >Edit Risk</Button>
+        <Button onClick={() => editRisk(record)} disabled={currentUser !== record.owner}>Edit Risk</Button>
       </div>
     </div>
   ),

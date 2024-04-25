@@ -35,7 +35,7 @@ const MainLayout: React.FC<LayoutProps> = ({ children }) => {
     <Layout >
       <Sider trigger={null} collapsible collapsed={collapse} style={{background: "#000000" }}>
         <SideNav />
-        <Button onClick={handleLogout} style={{ marginLeft: '20px', color: "#000" }}>Logout</Button>
+        
       </Sider>
       <Layout>
         <Header className="siteLayoutBackground" style={{ padding: 0, background: "#000000" }}>
@@ -44,9 +44,10 @@ const MainLayout: React.FC<LayoutProps> = ({ children }) => {
             onClick: handleToggle,
             style: { color: "#fff"}
           })}
-    
+        
           
           <span style={{ color: 'white', marginLeft: '20px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>CatPort</span>
+          <Button onClick={handleLogout} style={{ marginLeft: '1500px', color: "#000" }}>Logout</Button>
         </Header>
         <Content style={{ margin: '24px 16px', padding: 24, minHeight: "calc(100vh - 114px)", background: "#fff" }}>
         
