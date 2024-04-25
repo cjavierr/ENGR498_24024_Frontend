@@ -12,14 +12,16 @@ const CreateRisk: React.FC = () => {
   const history = useNavigate();
   const location = useLocation();
   const projectID = location.state.recordNumber;
+  const projectName = location.state.ownerOrg;
+  const today = new Date();
+  const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
   const randomNum = Math.floor(Math.random() * 900) + 100; // generates a random 3-digit number
   const recordNum = projectID + "-" + randomNum;
   console.log("create risk: " + projectID);
 
   const onFinish = (values: any) => { 
-    axios.post('http://localhost:3001/api/addKPI', {"newEntry" : values,
+    axios.post('http://localhost:3001/api/addRisk', {"newEntry" : values,
       "projectID": projectID,
-      "tableName": "Risks"
     }, { withCredentials: true })
       .then((res: any) => console.log(res.data))
       .catch((err: any) => console.error(err));
@@ -52,9 +54,10 @@ const CreateRisk: React.FC = () => {
             <Form.Item
               label="Project Name"
               name="projectName"
+              initialValue={projectName}
               rules={[{ required: true, message: 'Please input the project name!' }]}
             >
-              <Input placeholder="Enter Project Name" />
+              <Input disabled/>
             </Form.Item>
 
             <Form.Item
@@ -126,6 +129,17 @@ const CreateRisk: React.FC = () => {
               <Button type="primary" htmlType="submit">
                 Submit
               </Button>
+            </Form.Item>
+          </Col>
+        </Row>
+        <Row justify="center">
+          <Col span={24} style={{ textAlign: 'center' }}>
+            <Form.Item
+              label="Notes"
+              name="notes"
+              initialValue={date + ": Entry created."}
+            >
+              <Input disabled />
             </Form.Item>
           </Col>
         </Row>

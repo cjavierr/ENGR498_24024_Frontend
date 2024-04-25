@@ -38,9 +38,9 @@ const ProjectListing: React.FC = () => {
     fetchData();
   }, []);
 
-const handleRiskClick = (recordNumber: any) => {
+const handleRiskClick = (recordNumber: any, ownerOrg: any) => {
   console.log(recordNumber)
-    history('/createRisk', { state: { recordNumber } });
+    history('/createRisk', { state: { recordNumber, ownerOrg} });
   };
 
 const handleManageRiskClick = () => {
@@ -81,7 +81,7 @@ const handleManageRiskClick = () => {
         title: 'Create Risks',
         key: 'edit',
         render: (text: any, record: any) => (
-          <Button onClick={() => handleRiskClick(record.recordNumber)}>Create Risks</Button>
+          <Button onClick={() => handleRiskClick(record.recordNumber, record.ownerOrg)}>Create Risks</Button>
         ),
       },
       {

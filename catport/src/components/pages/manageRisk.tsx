@@ -2,6 +2,8 @@ import React from 'react';
 import { Table, Button, Tag, Space, Select } from 'antd';
 import { ColumnsType } from 'antd/es/table';
 import axios from 'axios';
+import cookie from 'cookie';
+import { Modal } from 'antd';
 
 const { Option } = Select;
 
@@ -21,10 +23,37 @@ interface RiskRecord {
   ranking: string;
   riskStage: string;
   escalate: string;
+  notes: string;
 }
 
 
 const ManageRisk: React.FC = () => {
+const [currentUser, setCurrentUser] = React.useState<string>('');
+const [visible, setVisible] = React.useState(false);
+const [selectedNote, setSelectedNote] = React.useState('');
+const [data, setData] = React.useState<RiskRecord[]>([]);
+
+const showModal = (note: string) => {
+  setSelectedNote(note);
+  setVisible(true);
+};
+
+const handleOk = () => {
+  setVisible(false);
+};
+
+const handleCancel = () => {
+  setVisible(false);
+};
+
+  React.useEffect(() => {
+    const cookies = cookie.parse(document.cookie);
+    const firstName = cookies.firstName;
+    setCurrentUser(firstName);
+    console.log('currentUser:', currentUser)
+    }, [currentUser]);
+  
+
   const getRisks = async () => {
     try {
       const response = await axios.get('http://localhost:3001/api/getRisks', { withCredentials: true });
@@ -33,17 +62,28 @@ const ManageRisk: React.FC = () => {
       console.error(error);
     }
   };
-  
-  const [data, setData] = React.useState<RiskRecord[]>([]);
+
+  const escalateRisk = async (recordNumber: string) => {
+    try {
+       await axios.post('http://localhost:3001/api/escalateRisk', {"riskID": recordNumber },{ withCredentials: true })
+       .then((res: any) => console.log(res.data))
+       .catch((err: any) => console.error(err));
+    } catch (error) {
+      console.error(error);
+    }
+  }
   
   React.useEffect(() => {
+    if(currentUser) {
     const fetchData = async () => {
       const result = await getRisks();
       setData(result.risks);
     };
+    
   
     fetchData();
-  }, []);
+  }
+  }, [currentUser]);
   const columns: ColumnsType<RiskRecord> = [
     {
         title: 'Record Number',
@@ -99,10 +139,14 @@ const ManageRisk: React.FC = () => {
         title: 'Escalate',
         dataIndex: 'escalate',
         key: 'escalate',
-        render: (escalate) => (
-          <Button type="primary">
+        render: ( text: string, record: RiskRecord) => (
+          <div>
+      <div style={{ marginBottom: '8px' }}>
+          <Button type="primary" onClick={() => escalateRisk(record.recordNumber)}>
             escalate
           </Button>
+      </div>
+    </div>
         ),
       },
       {
@@ -111,51 +155,22 @@ const ManageRisk: React.FC = () => {
         render: (_, record) => (
           <div>
       <div style={{ marginBottom: '8px' }}>
-        <Button type="primary">Edit Risk</Button>
+        <Button type="primary" >Edit Risk</Button>
       </div>
     </div>
   ),
 },
+{
+  title: 'Notes',
+  key: 'notes',
+  render: (text: string, record: RiskRecord) => (
+    <Button onClick={() => showModal(record.notes)}>View Notes</Button>
+  ),
+},
 ];
 
-  // const data: RiskRecord[] = [
-  //   {
-  //       key: '1',
-  //       recordNumber: 'CAT-001',
-  //       owner: 'Sardar',
-  //       projectName: '793-BEM',
-  //       riskNumber: 'CAT-001-R001',
-  //       riskName: 'Risk 1',
-  //       dateCreated: '01/03/2023',
-  //       lastUpdated: '02/11/2023',
-  //       duration: '60 Days',
-  //       clearBy: '03/04/2024',
-  //       probability: 'Likely',
-  //       impact: 'Minor',
-  //       ranking: 'Low',
-  //       riskStage: 'New',
-  //       escalate: 'No',
-  //     },
-  //     {
-  //       key: '2',
-  //       recordNumber: 'CAT-001',
-  //       owner: 'Sardar',
-  //       projectName: '793-BEM',
-  //       riskNumber: 'CAT-001-R001',
-  //       riskName: 'Risk 1',
-  //       dateCreated: '01/03/2023',
-  //       lastUpdated: '02/11/2023',
-  //       duration: '60 Days',
-  //       clearBy: '03/04/2024',
-  //       probability: 'Likely',
-  //       impact: 'Minor',
-  //       ranking: 'Low',
-  //       riskStage: 'New',
-  //       escalate: 'No',
-  //     }
-  // ];
-
   return (
+    <>
     <Table
       columns={columns}
       dataSource={data}
@@ -163,6 +178,10 @@ const ManageRisk: React.FC = () => {
       bordered
       title={() => 'Manage Risks'}
     />
+    <Modal title="Notes" visible={visible} onOk={handleOk} onCancel={handleCancel}>
+      <p>{selectedNote}</p>
+    </Modal>
+    </>
   );
 };
 
