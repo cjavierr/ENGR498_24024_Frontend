@@ -148,6 +148,12 @@ function CreateProject() {
     const subcats = subfieldform.getFieldsValue(true);
     let date = new Date().toJSON();
     console.log(formData.quantitativekpis.flat());
+
+    const qualitativeKPIsMap = formData.qualitativekpis.flat().reduce((map, kpi) => {
+      map[kpi] = [];
+      return map;
+    }, {});
+    
     const compiledData = {
       projectOwner: formData.owner,
       orgAdmin: formData.orgadmin,
@@ -160,10 +166,12 @@ function CreateProject() {
       projectNotes: [{ date: date, Note: formData.additionalNotes }],
       KPIs: {
         quantitative: formData.quantitativekpis.flat(),
-        qualitative: formData.qualitativekpis.flat(),
+        qualitative: Object.keys(qualitativeKPIsMap),
       },
       subcategories: subcats.subcategories,
+      qualitativeKPIsMap: qualitativeKPIsMap, // Optionally store the map in the compiled data
     };
+    
     console.log(compiledData);
     console.log("sending to server");
     try {
