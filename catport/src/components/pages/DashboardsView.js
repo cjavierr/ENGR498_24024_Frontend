@@ -42,6 +42,7 @@ const DashboardsView = () => {
       console.log("Deleting: ", dashboardID);
       setDeletingDashboardId(dashboardID);
       setDeleteConfirmVisible(true);
+      window.location.href = "/dashboardsView";
     } catch (error) {
       console.error("Error deleting dashboard:", error);
       message.error("Failed to delete dashboard");
@@ -90,11 +91,6 @@ const DashboardsView = () => {
       key: "ownerid",
     },
     {
-      title: "Date Created",
-      dataIndex: "dateCreated",
-      key: "dateCreated",
-    },
-    {
       title: "Escalate",
       dataIndex: "escalate",
       key: "escalate",
@@ -109,6 +105,7 @@ const DashboardsView = () => {
         <Space size="middle">
           <Link to={`/dashboardView/${record.dashid}`}>View</Link>
           <Link to={`/DashboardMerge/${record.dashid}`}>Map & Merge</Link>
+
           <a onClick={() => handleDeleteDashboard(record.dashid)}>Delete</a>
         </Space>
       ),

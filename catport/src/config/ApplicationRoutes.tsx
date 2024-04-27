@@ -21,6 +21,10 @@ import EditProject from '../components/pages/EditProject';
 import DashboardView from '../components/pages/DashboardView';
 import DashboardsView from '../components/pages/DashboardsView';
 import DashboardMerge from '../components/pages/DashboardMerge';
+import MergedDashboard from '../components/pages/test';
+import Risks from '../components/pages/Risks';
+
+
 
 
 const ApplicationRoutes: React.FC = () => {
@@ -48,6 +52,9 @@ const ApplicationRoutes: React.FC = () => {
 
                 <Route path="/dashboardsView/" element={<DashboardsView />} />
                 <Route path="/Login" element={<Login />} />
+                <Route path="/MergedDashboard" element={<MergedDashboard />} />
+                <Route path="/Risks/:projectId" element={<Risks />} />
+
 
               </Routes>
             </MainLayout>

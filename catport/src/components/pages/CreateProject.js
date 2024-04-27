@@ -36,108 +36,111 @@ function CreateProject() {
   const [userID, setUserID] = useState("");
   const [username, setUsername] = useState("");
   const [usernames, setUsernames] = useState([]);
+  const [quantitativeKPIOptions, setquantitativekpioptions] = useState([]);
+  const [qualitativeKPIOptions, setqualitativekpioptions] = useState([]);
 
-  const quantitativeKPIOptions = [
-    {
-      label: "Revenue - Actual - $",
-      value: "Revenue - Actual - $",
-    },
-    {
-      label: "Revenue - Forecast - $",
-      value: "Revenue - Forecast - $",
-    },
-    {
-      label: "Expense - Actual - $",
-      value: "Expense - Actual - $",
-    },
-    {
-      label: "Expense - Forecast - $",
-      value: "Expense - Forecast - $",
-    },
-    {
-      label: "Budget - Forecast - $",
-      value: "Budget - Forecast - $",
-    },
-    {
-      label: "Planned - Forecast - $",
-      value: "Planned - Forecast - $",
-    },
-    {
-      label: "Planned - Forecast - FTE",
-      value: "Planned - Forecast - FTE",
-    },
-    {
-      label: "Actual - $",
-      value: "Actual - $",
-    },
-    {
-      label: "Actual - Hrs",
-      value: "Actual - Hrs",
-    },
-    {
-      label: "Manufacture - Actual - Units",
-      value: "Manufacture - Actual - Units",
-    },
-    {
-      label: "Manufacture - Forecast - Units",
-      value: "Manufacture - Forecast - Units",
-    },
-    {
-      label: "Sales - Actual - $",
-      value: "Sales - Actual - $",
-    },
-    {
-      label: "Sales - Forecast - $",
-      value: "Sales - Forecast - $",
-    },
-    {
-      label: "Inventory - Ordered - $",
-      value: "Inventory - Ordered - $",
-    },
-    {
-      label: "Inventory - Instock - $",
-      value: "Inventory - Instock - $",
-    },
-    {
-      label: "Inventory - WIP - $",
-      value: "Inventory - WIP - $",
-    },
-  ];
 
-  const qualitativeKPIOptions = [
-    {
-      label: "Risks",
-      value: "Risks",
-    },
-    {
-      label: "Issues",
-      value: "Issues",
-    },
-    {
-      label: "Agenda Items",
-      value: "Agenda Items",
-    },
-    {
-      label: "Accomplishments",
-      value: "Accomplishments",
-    },
-    {
-      label: "Lessons Learned",
-      value: "Lessons Learned",
-    },
-    {
-      label: "Assigned Action Items",
-      value: "Assigned Action Items",
-    },
-    {
-      label: "My Action Items",
-      value: "My Action Items",
-    },
-    {
-      label: "Request Action Item",
-      value: "Request Action Item",
-    },
-  ];
+  // const quantitativeKPIOptions = [
+  //   {
+  //     label: "Revenue - Actual - $",
+  //     value: "Revenue - Actual - $",
+  //   },
+  //   {
+  //     label: "Revenue - Forecast - $",
+  //     value: "Revenue - Forecast - $",
+  //   },
+  //   {
+  //     label: "Expense - Actual - $",
+  //     value: "Expense - Actual - $",
+  //   },
+  //   {
+  //     label: "Expense - Forecast - $",
+  //     value: "Expense - Forecast - $",
+  //   },
+  //   {
+  //     label: "Budget - Forecast - $",
+  //     value: "Budget - Forecast - $",
+  //   },
+  //   {
+  //     label: "Planned - Forecast - $",
+  //     value: "Planned - Forecast - $",
+  //   },
+  //   {
+  //     label: "Planned - Forecast - FTE",
+  //     value: "Planned - Forecast - FTE",
+  //   },
+  //   {
+  //     label: "Actual - $",
+  //     value: "Actual - $",
+  //   },
+  //   {
+  //     label: "Actual - Hrs",
+  //     value: "Actual - Hrs",
+  //   },
+  //   {
+  //     label: "Manufacture - Actual - Units",
+  //     value: "Manufacture - Actual - Units",
+  //   },
+  //   {
+  //     label: "Manufacture - Forecast - Units",
+  //     value: "Manufacture - Forecast - Units",
+  //   },
+  //   {
+  //     label: "Sales - Actual - $",
+  //     value: "Sales - Actual - $",
+  //   },
+  //   {
+  //     label: "Sales - Forecast - $",
+  //     value: "Sales - Forecast - $",
+  //   },
+  //   {
+  //     label: "Inventory - Ordered - $",
+  //     value: "Inventory - Ordered - $",
+  //   },
+  //   {
+  //     label: "Inventory - Instock - $",
+  //     value: "Inventory - Instock - $",
+  //   },
+  //   {
+  //     label: "Inventory - WIP - $",
+  //     value: "Inventory - WIP - $",
+  //   },
+  // ];
+
+  // const qualitativeKPIOptions = [
+  //   {
+  //     label: "Risks",
+  //     value: "Risks",
+  //   },
+  //   {
+  //     label: "Issues",
+  //     value: "Issues",
+  //   },
+  //   {
+  //     label: "Agenda Items",
+  //     value: "Agenda Items",
+  //   },
+  //   {
+  //     label: "Accomplishments",
+  //     value: "Accomplishments",
+  //   },
+  //   {
+  //     label: "Lessons Learned",
+  //     value: "Lessons Learned",
+  //   },
+  //   {
+  //     label: "Assigned Action Items",
+  //     value: "Assigned Action Items",
+  //   },
+  //   {
+  //     label: "My Action Items",
+  //     value: "My Action Items",
+  //   },
+  //   {
+  //     label: "Request Action Item",
+  //     value: "Request Action Item",
+  //   },
+  // ];
 
   const onFinish = async (values) => {
     console.log("Submitting Form");
@@ -173,7 +176,7 @@ function CreateProject() {
       message.success(response.data.message);
       setSuccessMessage(response.data.message);
       setError(null);
-
+      window.location.href = "/projects";
       // Optionally clear form fields or navigate to a different page
     } catch (error) {
       console.error("Error creating project:", error);
@@ -214,9 +217,38 @@ function CreateProject() {
     }
   };
 
+const fetchGlossary = async () =>{
+  console.log("Grabbing company glossary");
+  try {
+    const response = await axios.get(
+      "http://localhost:3001/api/getCompanyGlossary"
+    );
+    console.log(response.data.quantitativekpis);
+    const preprocess = response.data.quantitativekpis.map(obj => obj.Title);
+
+    setquantitativekpioptions(preprocess.map((item) => ({
+      label: item,
+      value: item,
+    })));
+
+    const preprocess2 = response.data.qualitativekpis.map(obj => obj.Title);
+
+
+    setqualitativekpioptions(preprocess2.map((item) => ({
+      label: item,
+      value: item,
+    })));
+
+  } catch (error) {
+    console.error("Error fetching company Glossary:", error);
+    setError("Failed to fetch company glossary");
+  }
+};
+
   useEffect(() => {
     fetchData();
     fetchUsernames();
+    fetchGlossary();
   }, [username]); // Re-run on username change
 
   const onChange = (value) => {

@@ -101,12 +101,12 @@ function CreateDashboard() {
     try {
       const dashboardDetails = {
         owner: username, // Replace with the actual user ID
-        users: [username], // Add any user IDs that should have access to the dashboard
+        users: [username, stepForm.getFieldValue("orgadmin")], // Add any user IDs that should have access to the dashboard
         versions: [{ date: date, tables: tables }],
         dashboards: [],
         dashboardName: stepForm.getFieldValue("dashboardName"),
         escalate: false,
-        project: stepForm.getFieldValue("projectID"),
+        project: projectId,
       };
 
       console.log(dashboardDetails);
@@ -119,6 +119,8 @@ function CreateDashboard() {
       message.success(response.data.message);
       setSuccessMessage(response.data.message);
       setError(null);
+      window.location.href = "/dashboardsView";
+
       //backend shit here
     } catch (error) {
       console.error("Error creating dashboard:", error);
@@ -323,17 +325,6 @@ function CreateDashboard() {
     return (
       <>
         <Form.Item
-          name="projectID"
-          label="Project Number"
-          rules={[
-            {
-              required: true,
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
-        <Form.Item
           name="owner"
           label="Owner"
           rules={[
@@ -343,7 +334,7 @@ function CreateDashboard() {
             },
           ]}
         >
-          <Input />
+          <Input disabled/>
         </Form.Item>
         <Form.Item
           name="orgadmin"
@@ -384,13 +375,14 @@ function CreateDashboard() {
           label="Project"
           rules={[{ required: true, message: "Please select a project!" }]}
         >
-          <Select value={selectedProject} onChange={onProjectChange}>
+          {/* <Select value={selectedProject} onChange={onProjectChange}>
             {projects.map((project) => (
               <Select.Option key={project} value={project}>
                 {project}
               </Select.Option>
             ))}
-          </Select>
+          </Select> */}
+          <Input defaultValue={projectId}disabled/>
         </Form.Item>
         <Form.Item
           label="Quantitative Field"

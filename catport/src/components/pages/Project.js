@@ -21,7 +21,7 @@ const ProjectView = () => {
           }
         );
         await setProject(response.data);
-        console.log(project);
+        console.log(response.data);
         setLoading(false);
       } catch (error) {
         console.error("Error fetching project:", error);
@@ -75,7 +75,9 @@ const ProjectView = () => {
         </Descriptions.Item>
         <Descriptions.Item label="KPIs - Qualitative">
           {project.KPIs.qualitative.map((item, index) => (
-            <p key={index}>{item}</p>
+            <p key={index}>
+            <Link key={index} to={`/${item}/${project.projectID}`}>{item}</Link>
+            </p>
           ))}
         </Descriptions.Item>
         <Descriptions.Item label="KPIs - Quantitative">

@@ -6,13 +6,26 @@ function Login() {
   const [password, setPassword] = useState('');
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [error, setError] = useState(null);
+  const [user, setUser] = useState();
 
   useEffect(() => {
     const storedUser = localStorage.getItem('loggedInUser');
+    const fetchUser = async () => {
+      try{
+        const response = await axios.post("http://localhost:3001/api/getUser", {
+          username: username, // Send username in request body
+        });   
+        setUser(response.body); 
+      }catch(error){
+  
+      }
+    };
+
     if (storedUser) {
       setIsLoggedIn(true);
       setUsername(localStorage.getItem('loggedInUser'));
     }
+    fetchUser();
   }, []); // Empty dependency array to run only on initial render
 
   const handleSubmit = async (e) => {
@@ -35,6 +48,7 @@ function Login() {
         console.log(localStorage.getItem('loggedInUser'));
         setIsLoggedIn(true);
         setError(null);
+        window.location.href = "/login";
       } else {
         setError('Invalid username or password.');
       }
@@ -48,6 +62,7 @@ function Login() {
   const handleLogout = () => {
     localStorage.removeItem('loggedInUser');
     setIsLoggedIn(false);
+    window.location.href = "/login";
   };
 
   return (

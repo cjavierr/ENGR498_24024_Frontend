@@ -155,6 +155,7 @@ const DashboardView = () => {
         escalate: false,
         project: response.data.project,
         dashid: response.data.dashid,
+        mappedKPIs: []
       };
 
       const updateResponse = await axios.post(
@@ -177,7 +178,8 @@ const DashboardView = () => {
 
   return (
     <div className="dashboard-view-container">
-      <h2>{dashboardName}</h2>
+
+      <Title>{dashboardName}</Title>
       <Descriptions title="Dashboard Details" bordered>
         <Descriptions.Item label="Dashboard ID">
           {dashboardId}
@@ -191,12 +193,9 @@ const DashboardView = () => {
           {escalate ? "Yes" : "No"}
         </Descriptions.Item>
       </Descriptions>
-      <h3>KPIs</h3>
+      <h3>Key Performance Indices</h3>
       {tables.length > 0 && (
         <>
-          <Title level={3} style={{ textAlign: "center", marginTop: "24px" }}>
-            Dashboard Preview
-          </Title>
           {tables.map((field, index) => (
             <div key={index} style={dashboardStyle}>
               <Title level={4}>{field.kpi}</Title>

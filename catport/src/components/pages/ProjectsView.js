@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { Table, Space, Button, Modal, message } from "antd";
+import { Table, Space, Button, Modal, message, Tag } from "antd";
 import { Link } from "react-router-dom";
+import {
+PlusOutlined
+} from '@ant-design/icons';
 
 const ProjectsView = () => {
   const [projects, setProjects] = useState([]);
@@ -100,9 +103,9 @@ const ProjectsView = () => {
       render: (text, record) => (
         <div>
         {record.dashboards.map((dashboard, index) => (
-          <div key={index}>
+          <Tag key={index}>
             <Link to={`/dashboardView/${dashboard}`}>{dashboard}</Link>
-          </div>
+          </Tag>
         ))}
       </div>
       ),
@@ -126,7 +129,8 @@ const ProjectsView = () => {
   return (
     <div>
       <Button type="primary">
-        <Link to="/createProject">Create Project</Link>
+        <PlusOutlined/>
+        <Link to="/createProject"> Create New Project</Link>
       </Button>
       <Table
         columns={columns}

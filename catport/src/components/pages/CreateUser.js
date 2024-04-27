@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { Form, Input, Button, Typography, message } from 'antd';
+import { Form, Input, Button, Typography, message, Switch, Select } from 'antd';
 
 const { Title } = Typography;
+const { Option } = Select;
 
 function CreateUser() {
   const [form] = Form.useForm();
@@ -63,6 +64,36 @@ function CreateUser() {
           rules={[{ required: true, message: 'Please input your email!', type: 'email' }]}
         >
           <Input />
+        </Form.Item>
+        <Form.Item
+          label="Manager"
+          name="manager"
+          rules={[{ required: true, message: 'Please select the manager!' }]}
+        >
+          <Select placeholder="Select manager">
+            <Option value="managerID1">Manager 1</Option>
+            <Option value="managerID2">Manager 2</Option>
+            {/* Add more managers as needed */}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Department"
+          name="department"
+          rules={[{ required: true, message: 'Please select the department!' }]}
+        >
+          <Select placeholder="Select department">
+            <Option value="departmentID1">Department 1</Option>
+            <Option value="departmentID2">Department 2</Option>
+            {/* Add more departments as needed */}
+          </Select>
+        </Form.Item>
+        <Form.Item
+          label="Admin Account"
+          name="isAdmin"
+          valuePropName="checked"
+          initialValue={false}
+        >
+          <Switch />
         </Form.Item>
         {error && <p style={{ color: 'red' }}>{error}</p>}
         <Form.Item>

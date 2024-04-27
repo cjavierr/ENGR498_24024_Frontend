@@ -47,7 +47,7 @@ const MainLayout: React.FC<LayoutProps> = ({ children }) => {
           </div>
           <div>
             <Avatar size="small" icon={<UserOutlined />} style={{ backgroundColor: '#1890ff', marginRight: '20px' }} />
-            <a style={{ color: 'white', paddingRight: '30px' }}>{username}</a>
+            <a href="/login" style={{ color: 'white', paddingRight: '30px' }}>{username}</a>
           </div>
         </Header>
         <Content style={{ margin: '24px 16px', padding: 24, minHeight: "calc(100vh - 114px)", background: "#fff" }}>

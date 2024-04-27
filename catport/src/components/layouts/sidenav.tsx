@@ -1,9 +1,18 @@
 import React from 'react';
 import { Menu} from 'antd';
 import {
-    HomeOutlined,
-    ProjectOutlined,
+    AppstoreOutlined,
+    ContainerOutlined,
+    DesktopOutlined,
+    MailOutlined,
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+    PieChartOutlined,
     UnorderedListOutlined,
+    HomeOutlined,
+    ProfileOutlined,
+    UserAddOutlined
+    
   } from '@ant-design/icons';
 import {useNavigate}  from 'react-router';
 
@@ -60,20 +69,17 @@ const SideNav = () => {
                     <HomeOutlined/>
                     <span> Home</span>
                 </Menu.Item>
-                <Menu.Item key="2" onClick={handleCreateProjectClick} >
-                    <ProjectOutlined/>
-                    <span> Create Project</span>
-                </Menu.Item>
+
             <Menu.Item key="12" onClick={handleProjectViewClick}>
-            <UnorderedListOutlined />
+            <ContainerOutlined />
             <span> Projects View</span>
             </Menu.Item>
             <Menu.Item key="13" onClick={handleDashboardsViewClick}>
-            <UnorderedListOutlined />
+            <ProfileOutlined />
             <span> Dashboards View</span>
             </Menu.Item>
             <Menu.Item key="11" onClick={handleCreateUserClick} >
-            <UnorderedListOutlined/>
+            <UserAddOutlined/>
             <span> Create New User</span>
             </Menu.Item>
             </Menu>
