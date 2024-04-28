@@ -45,6 +45,7 @@ function CreateProject() {
     const formData = stepForm.getFieldsValue(true);
     const subcats = subfieldform.getFieldsValue(true);
     let date = new Date().toJSON();
+    console.log(formData.quantitativekpis.flat());
 
     const qualitativeKPIsMap = formData.qualitativekpis.flat().reduce((map, kpi) => {
       map[kpi] = [];
@@ -62,11 +63,10 @@ function CreateProject() {
       ],
       projectNotes: [{ date: date, Note: formData.additionalNotes }],
       KPIs: {
-        quantitative: Array.isArray(formData.quantitativekpis) ? formData.quantitativekpis.flat() : [],
-        qualitative: Object.keys(qualitativeKPIsMap),
+        quantitative: formData.quantitativekpis.flat(),
+        qualitative: qualitativeKPIsMap,
       },
       subcategories: subcats.subcategories,
-      qualitativeKPIsMap: qualitativeKPIsMap, // Optionally store the map in the compiled data
     };
     
     console.log(compiledData);
@@ -436,7 +436,7 @@ const fetchGlossary = async () =>{
               )}
             </Form.List>
 
-            <Form.Item noStyle shouldUpdate>
+            {/* <Form.Item noStyle shouldUpdate>
               {() => (
                 <Typography>
                   <pre>
@@ -444,7 +444,7 @@ const fetchGlossary = async () =>{
                   </pre>
                 </Typography>
               )}
-            </Form.Item>
+            </Form.Item> */}
           </Form>
         </Form.Item>
       </>

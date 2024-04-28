@@ -3,12 +3,16 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Descriptions, Tag, Button } from "antd";
 import { Link } from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 
 const ProjectView = () => {
   const { projectId } = useParams(); // Get the projectId from the URL params
   const [project, setProject] = useState(null);
   const [loading, setLoading] = useState(false);
-
+  const navigate = useNavigate();
+  const handleRiskClick = (projectId, projectName) => {
+      navigate(`/risks/${projectId}`, { state: { projectId, projectName } });
+  }
   useEffect(() => {
     const fetchProject = async () => {
       setLoading(true);
@@ -74,13 +78,21 @@ const ProjectView = () => {
           )) : null}
         </Descriptions.Item>
         <Descriptions.Item label="KPIs - Qualitative">
-          { project.KPIs.qualitative && project.KPIs.qualitative.length > 0
-    ? project.KPIs.qualitative.map((item, index) => (
-            <p key={index}>
-            <Link key={index} to={`/${item}/${project.projectID}`}>{item}</Link>
-            </p>
-          )): null}
-        </Descriptions.Item>
+  {project.KPIs.qualitative ? Object.entries(project.KPIs.qualitative).map(([key, value], index) => (
+    <p key={index}>
+      {key === 'Risks' ? (
+        <span style={{ color: 'blue', cursor: 'pointer' }} onClick={() => handleRiskClick(project.projectID, project.projectName)}>
+          {key}
+        </span>
+      ) : (
+        key
+      )}
+      {value.length > 0 && value.map((item, subIndex) => (
+        <Tag key={subIndex}>{item}</Tag>
+      ))}
+    </p>
+  )) : null}
+</Descriptions.Item>
         <Descriptions.Item label="KPIs - Quantitative">
         { project.KPIs.quantitative && project.KPIs.quantitative.length > 0
     ? project.KPIs.quantitative.map((item, index) => (

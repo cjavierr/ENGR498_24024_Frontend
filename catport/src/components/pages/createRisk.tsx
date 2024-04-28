@@ -9,15 +9,28 @@ const { Option } = Select;
 const { Title } = Typography;
 
 const CreateRisk: React.FC = () => {
+  const [projectName, setProjectName] = React.useState("");
   const history = useNavigate();
   const location = useLocation();
-  const projectID = location.state.recordNumber;
-  const projectName = location.state.ownerOrg;
+  const projectID = location.state.projectID;
   const today = new Date();
   const date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
   const randomNum = Math.floor(Math.random() * 900) + 100; // generates a random 3-digit number
   const recordNum = projectID + "-" + randomNum;
-  console.log("create risk: " + projectID);
+
+  React.useEffect(() => {
+    const getProject = async () => {
+      try {
+        const response = await axios.post(`http://localhost:3001/api/getProject`, {"projectId" : projectID,}, { withCredentials: true });
+        const project = response.data;
+        setProjectName(project.projectName);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getProject();
+  },);
 
   const onFinish = (values: any) => { 
     axios.post('http://localhost:3001/api/addRisk', {"newEntry" : values,
@@ -36,6 +49,7 @@ const CreateRisk: React.FC = () => {
         </Col>
       </Row>
       <Form
+        key={projectName}
         name="createRisk"
         onFinish={onFinish}
         layout="vertical"
