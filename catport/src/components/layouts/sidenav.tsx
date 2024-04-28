@@ -14,7 +14,7 @@ import {
     UserAddOutlined
     
   } from '@ant-design/icons';
-import {useNavigate}  from 'react-router';
+import {useNavigate}  from 'react-router-dom';
 
 const SideNav = () => {
     const history = useNavigate();

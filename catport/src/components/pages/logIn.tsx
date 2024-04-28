@@ -1,7 +1,7 @@
 import React from 'react';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input } from 'antd';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const LoginPage: React.FC = () => {
@@ -18,7 +18,7 @@ const LoginPage: React.FC = () => {
           }, {
               withCredentials: true
           });
-          console.log('Received values of form: ', values);
+          localStorage.setItem('loggedInUser', values.username);
           navigate('/home');
       } catch (error) {
           console.error('Error signing in:', error);

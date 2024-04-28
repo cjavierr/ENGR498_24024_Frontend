@@ -17,7 +17,7 @@ import GetUser from "./GetUser";
 import CreateUser from "./CreateUser";
 import CreateProject from "./CreateProject";
 import CreateDashboard from "./CreateDashboard";
-import Login from "./Login";
+import Login from "./logIn";
 import AddProjectToUser from "./AddProjectToUser";
 import AddUserToProject from "./AddUserToProject";
 import GetProject from "./GetProject";
