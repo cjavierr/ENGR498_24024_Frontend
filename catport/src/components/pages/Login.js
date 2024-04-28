@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import useNavigate from 'react-router-dom';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -8,6 +9,8 @@ function Login() {
   const [error, setError] = useState(null);
   const [user, setUser] = useState();
 
+  const history = useNavigate();
+
   useEffect(() => {
     const storedUser = localStorage.getItem('loggedInUser');
     const fetchUser = async () => {
@@ -15,7 +18,8 @@ function Login() {
         const response = await axios.post("http://localhost:3001/api/getUser", {
           username: username, // Send username in request body
         });   
-        setUser(response.body); 
+        setUser(response.body);
+        history('/home');
       }catch(error){
   
       }
@@ -39,7 +43,6 @@ function Login() {
         withCredentials: true
       });
   
-      console.log(response.data.success);
       localStorage.setItem('loggedInUser', username); // Store username in localStorage
       if (response.data.success) {
         console.log("Setting Token");
