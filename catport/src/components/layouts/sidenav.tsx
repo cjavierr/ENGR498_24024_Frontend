@@ -28,8 +28,8 @@ const SideNav = () => {
     const handleCreateSubCategoriesClick = () => {
         history('/createSubcategories');
     }
-    const handleCreateProjectListingClick = () => {
-        history('/createProjectListing');
+    const handleProjectListingClick = () => {
+        history('/projectListing');
     }
     const handleCreateDashboardClick = () => {
         history('/CreateDashboard');
