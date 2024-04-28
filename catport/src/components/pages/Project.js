@@ -57,33 +57,37 @@ const ProjectView = () => {
           {project.projectDescription}
         </Descriptions.Item>
         <Descriptions.Item label="Project Notes">
-          {project.projectNotes.map((note, index) => (
+          {project.projectNotes ? project.projectNotes.map((note, index) => (
             <p key={index}>
               {note.date}: {note.Note}
             </p>
-          ))}
+          )) : null}
         </Descriptions.Item>
         <Descriptions.Item label="Subcategories">
-          {project.subcategories.map((subcategory, index) => (
+          {project.subcategories ? project.subcategories.map((subcategory, index) => (
             <div key={index}>
               <p>{subcategory.subcategoryheading}</p>
               {subcategory.list.map((item, subIndex) => (
                 <Tag key={subIndex}>{item.subcategorydetail}</Tag>
               ))}
             </div>
-          ))}
+          )) : null}
         </Descriptions.Item>
         <Descriptions.Item label="KPIs - Qualitative">
-          {project.KPIs.qualitative.map((item, index) => (
+          { project.KPIs.qualitative && project.KPIs.qualitative.length > 0
+    ? project.KPIs.qualitative.map((item, index) => (
             <p key={index}>
             <Link key={index} to={`/${item}/${project.projectID}`}>{item}</Link>
             </p>
-          ))}
+          )): null}
         </Descriptions.Item>
         <Descriptions.Item label="KPIs - Quantitative">
-          {project.KPIs.quantitative.map((item, index) => (
-            <p key={index}>{item}</p>
-          ))}
+        { project.KPIs.quantitative && project.KPIs.quantitative.length > 0
+    ? project.KPIs.quantitative.map((item, index) => (
+            <p key={index}>
+            <Link key={index} to={`/${item}/${project.projectID}`}>{item}</Link>
+            </p>
+          )): null}
         </Descriptions.Item>
         <Descriptions.Item label="Users">
           {project.users.map((user, index) => (

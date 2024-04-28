@@ -55,7 +55,7 @@ const MainLayout: React.FC<LayoutProps> = ({ children }) => {
         
           
             <span style={{ color: 'white', marginLeft: '20px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>CatPort</span>
-          <Button onClick={handleLogout} style={{ marginLeft: '1500px', color: "#000" }}>Logout</Button>
+          <Button onClick={handleLogout} style={{marginLeft:'70vw', color: "#000" }}>Logout</Button>
           </div>
             <Avatar size="small" icon={<UserOutlined />} style={{ backgroundColor: '#1890ff', marginRight: '20px' }} />
             <a href="/login" style={{ color: 'white', paddingRight: '30px' }}>{username}</a>

@@ -45,7 +45,6 @@ function CreateProject() {
     const formData = stepForm.getFieldsValue(true);
     const subcats = subfieldform.getFieldsValue(true);
     let date = new Date().toJSON();
-    console.log(formData.quantitativekpis.flat());
 
     const qualitativeKPIsMap = formData.qualitativekpis.flat().reduce((map, kpi) => {
       map[kpi] = [];
@@ -63,7 +62,7 @@ function CreateProject() {
       ],
       projectNotes: [{ date: date, Note: formData.additionalNotes }],
       KPIs: {
-        quantitative: formData.quantitativekpis.flat(),
+        quantitative: Array.isArray(formData.quantitativekpis) ? formData.quantitativekpis.flat() : [],
         qualitative: Object.keys(qualitativeKPIsMap),
       },
       subcategories: subcats.subcategories,
