@@ -94,9 +94,9 @@ const editRisk = (record: RiskRecord) => {
   }, [currentUser]);
   const columns: ColumnsType<RiskRecord> = [
     {
-        title: 'Record Number',
-        dataIndex: 'recordNumber',
-        key: 'recordNumber',
+        title: 'RiskID',
+        dataIndex: 'riskid',
+        key: 'riskid',
       },
       {
         title: 'Owner',

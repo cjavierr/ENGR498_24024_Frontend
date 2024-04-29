@@ -58,8 +58,8 @@ const CreateRisk: React.FC = () => {
         <Row gutter={24}>
           <Col span={12}>
           <Form.Item
-              label="Record Number"
-              name="recordNumber"
+              label="RiskID"
+              name="riskid"
               initialValue={recordNum}
             >
               <Input disabled/>
