@@ -12,6 +12,7 @@ const { Title } = Typography;
 const CreateRisk: React.FC = () => {
   const history = useNavigate();
   const location = useLocation();
+  const [form] = Form.useForm();
   const riskRecord = location.state.record;
   const viewers = riskRecord.viewers;
   const owner = riskRecord.owner;
@@ -26,9 +27,9 @@ const CreateRisk: React.FC = () => {
     }, { withCredentials: true })
       .then((res: any) => console.log(res.data))
       .catch((err: any) => console.error(err));
-      history('/manageRisk')
+      history(-1);
   };
-
+  
   return (
     <div style={{ margin: '24px 16px', padding: 24, background: '#fff', minHeight: 'calc(100vh - 114px)' }}>
       <Row justify="center">
@@ -46,8 +47,8 @@ const CreateRisk: React.FC = () => {
           <Col span={12}>
           <Form.Item
               label="Record Number"
-              name="recordNumber"
-              initialValue={riskRecord.recordNumber}
+              name="riskid"
+              initialValue={riskRecord && riskRecord.riskid ? riskRecord.riskid : ''}
             >
               <Input disabled/>
             </Form.Item>
@@ -55,7 +56,7 @@ const CreateRisk: React.FC = () => {
             <Form.Item
               label="Project Name"
               name="projectName"
-              initialValue={riskRecord.projectName}
+              initialValue={riskRecord && riskRecord.projectName ? riskRecord.projectName : ''}
               rules={[{ required: true, message: 'Please input the project name!' }]}
             >
               <Input disabled/>
@@ -64,7 +65,7 @@ const CreateRisk: React.FC = () => {
             <Form.Item
               label="Risk Name"
               name="riskName"
-              initialValue={riskRecord.riskName}
+              initialValue={riskRecord && riskRecord.riskName ? riskRecord.riskName : ''}
               rules={[{ required: true, message: 'Please input the risk name!' }]}
             >
               <Input placeholder="Enter Risk Name" />
@@ -73,24 +74,24 @@ const CreateRisk: React.FC = () => {
             <Form.Item
               label="Description"
               name="description"
-              initialValue={riskRecord.description}
+              initialValue={riskRecord && riskRecord.description ? riskRecord.description : ''} 
             >
               <TextArea rows={4} placeholder="Enter Description" />
             </Form.Item>
 
-            <Form.Item label="Date Created" name="dateCreated" initialValue={dayjs(riskRecord.dateCreated.toISOString)}>
+            <Form.Item label="Date Created" name="dateCreated" initialValue={riskRecord && riskRecord.dateCreated ? dayjs(riskRecord.dateCreated.toISOString) : ''}>
               <DatePicker style={{ width: '100%' }} format="MM-DD-YYYY"  />
             </Form.Item>
 
           </Col>
           <Col span={12}>
 
-            <Form.Item label="Clear by Date" name="clearBy" initialValue={dayjs(riskRecord.clearBy.toISOString)}>
+            <Form.Item label="Clear by Date" name="clearBy" initialValue={riskRecord && riskRecord.clearBy ? dayjs(riskRecord.clearBy.toISOString) : ''}>
               <DatePicker style={{ width: '100%' }} format="MM-DD-YYYY"/>
             </Form.Item>
 
             <Form.Item label="Likelihood" name="probability" 
-                initialValue={riskRecord.probability}>
+                initialValue={riskRecord && riskRecord.probability ? riskRecord.probability : ''}>
               <Select placeholder="Select Likelihood" >
                 <Option value="certain">Certain</Option>
                 <Option value="likely">Likely</Option>
@@ -100,7 +101,7 @@ const CreateRisk: React.FC = () => {
               </Select>
             </Form.Item>
 
-            <Form.Item label="Consequence" name="impact" initialValue={riskRecord.impact}>
+            <Form.Item label="Consequence" name="impact" initialValue={riskRecord && riskRecord.impact ? riskRecord.impact : ''}>
               <Select placeholder="Select Consequence">
                 <Option value="insignificant">Insignificant</Option>
                 <Option value="minor">Minor</Option>
@@ -110,7 +111,7 @@ const CreateRisk: React.FC = () => {
               </Select>
             </Form.Item>
 
-            <Form.Item label="Ranking" name="ranking" initialValue={riskRecord.ranking}>
+            <Form.Item label="Ranking" name="ranking" initialValue={riskRecord && riskRecord.ranking ? riskRecord.ranking : ''}>
               <Select placeholder="Select Ranking">
                 <Option value="high">High</Option>
                 <Option value="medium">Medium</Option>
@@ -118,7 +119,7 @@ const CreateRisk: React.FC = () => {
               </Select>
             </Form.Item>
 
-            <Form.Item label="Risk Stage" name="riskStage" initialValue={riskRecord.riskStage}>
+            <Form.Item label="Risk Stage" name="riskStage" initialValue={riskRecord && riskRecord.riskStage ? riskRecord.riskStage : ''}>
               <Select placeholder="Select stage">
                 <Option value="New">New</Option>
                 <Option value="Work in Progress">Work in Progress</Option>

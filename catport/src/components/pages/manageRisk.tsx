@@ -4,7 +4,7 @@ import { ColumnsType } from 'antd/es/table';
 import axios from 'axios';
 import cookie from 'cookie';
 import { Modal } from 'antd';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const { Option } = Select;
 
@@ -35,6 +35,7 @@ const [selectedNote, setSelectedNote] = React.useState('');
 const [data, setData] = React.useState<RiskRecord[]>([]);
 
 const navigate = useNavigate();
+const location = useLocation();
 
 const showModal = (note: string) => {
   setSelectedNote(note);
@@ -69,6 +70,13 @@ const editRisk = (record: RiskRecord) => {
     }
   };
 
+  const deleteRisk = async (riskid : string) => {
+    try {
+      const response = await axios.post('http://localhost:3001/api/deleteRisk', {"riskid" : riskid}, { withCredentials: true });
+    } catch (error) {
+      console.error(error);
+    }
+  }
   const escalateRisk = async (recordNumber: string) => {
     try {
        await axios.post('http://localhost:3001/api/escalateRisk', {"riskID": recordNumber },{ withCredentials: true })
@@ -164,6 +172,7 @@ const editRisk = (record: RiskRecord) => {
           <div>
       <div style={{ marginBottom: '8px' }}>
         <Button onClick={() => editRisk(record)} disabled={currentUser !== record.owner}>Edit Risk</Button>
+        <Button onClick={() => deleteRisk(record.riskid)} disabled={currentUser !== record.owner}>Delete</Button>
       </div>
     </div>
   ),

@@ -91,9 +91,17 @@ const Risks = () => {
       navigate('/createRisk', { state: { projectID: projectId} });
     };
 
+  const deleteRisk = async (riskid : string) => {
+    try {
+      const response = await axios.post('http://localhost:3001/api/deleteRisk', {"riskid" : riskid}, { withCredentials: true });
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   const columns = [
     {
-      title: 'Record Number',
+      title: 'Risk ID',
       dataIndex: 'riskid',
       key: 'riskid',
     },
@@ -163,6 +171,7 @@ const Risks = () => {
         <div>
     <div style={{ marginBottom: '8px' }}>
       <Button onClick={() => editRisk(record)} disabled={currentUser !== record.owner}>Edit Risk</Button>
+      <Button onClick={() => deleteRisk(record.riskid)} disabled={currentUser !== record.owner}>Delete</Button>
     </div>
   </div>
 ),
