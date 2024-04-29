@@ -28,11 +28,6 @@ const MainLayout: React.FC<LayoutProps> = ({ children }) => {
     }
   }, []);
 
-  const handleLogout = async () => {
-    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-    localStorage.removeItem('loggedInUser');
-    history('/');
-  };
   const handleToggle = (event: any) => {
     event.preventDefault();
     collapse ? setCollapse(false) : setCollapse(true);
@@ -55,10 +50,11 @@ const MainLayout: React.FC<LayoutProps> = ({ children }) => {
         
           
             <span style={{ color: 'white', marginLeft: '20px', fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>CatPort</span>
-          <Button onClick={handleLogout} style={{marginLeft:'70vw', color: "#000" }}>Logout</Button>
           </div>
+          <div>
             <Avatar size="small" icon={<UserOutlined />} style={{ backgroundColor: '#1890ff', marginRight: '20px' }} />
             <a href="/login" style={{ color: 'white', paddingRight: '30px' }}>{username}</a>
+            </div>
         </Header>
         <Content style={{ margin: '24px 16px', padding: 24, minHeight: "calc(100vh - 114px)", background: "#fff" }}>
         

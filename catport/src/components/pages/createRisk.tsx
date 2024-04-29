@@ -38,7 +38,7 @@ const CreateRisk: React.FC = () => {
     }, { withCredentials: true })
       .then((res: any) => console.log(res.data))
       .catch((err: any) => console.error(err));
-      history('/manageRisk')
+      history(-1)
   };
 
   return (

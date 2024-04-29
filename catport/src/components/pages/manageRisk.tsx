@@ -99,7 +99,7 @@ const editRisk = (record: RiskRecord) => {
   
     fetchData();
   }
-  }, [currentUser]);
+  }, );
   const columns: ColumnsType<RiskRecord> = [
     {
         title: 'RiskID',
