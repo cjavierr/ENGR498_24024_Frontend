@@ -57,7 +57,7 @@ const SignUp: React.FC = () => {
               withCredentials: true
           });
             console.log('Received response from server: ', response.data);
-            navigate('/login');
+            navigate('/');
         } catch (error) {
             console.error('Error occurred while submitting form: ', error);
         }
@@ -89,22 +89,6 @@ const SignUp: React.FC = () => {
       scrollToFirstError
       
     >
-      <Form.Item
-        name="email"
-        label="E-mail"
-        rules={[
-          {
-            type: 'email',
-            message: 'The input is not valid E-mail!',
-          },
-          {
-            required: true,
-            message: 'Please input your E-mail!',
-          },
-        ]}
-      >
-        <Input />
-      </Form.Item>
 
       <Form.Item
         name="password"

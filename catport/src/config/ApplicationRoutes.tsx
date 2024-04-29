@@ -1,25 +1,39 @@
 import React from 'react';
 import { Route, Routes} from "react-router-dom";
 import Home from '../components/pages/home';
-import CreateProject from '../components/pages/createProject';
 import MainLayout from '../components/layouts/MainLayout'; 
-import CreateDashboard from '../components/pages/createDashboard';
 import CreateSubcategories from '../components/pages/createSubcategories';
-import ProjectListing from '../components/pages/createProjectListing';
-import ManageDashboard from '../components/pages/createManageDashboard';
 import CreateRisk from '../components/pages/createRisk';
-import ManageRisk from '../components/pages/createManageRisk';
-import LoginPage from '../components/pages/logIn';
 import SignUp from '../components/pages/signup';
-import Dashboard from '../components/pages/dashboard';
+import GetUser from '../components/pages/GetUser';
+import CreateUser from '../components/pages/CreateUser';
+import CreateProject from '../components/pages/CreateProject';
+import CreateDashboard from '../components/pages/CreateDashboard';
+import AddProjectToUser from '../components/pages/AddProjectToUser';
+import AddUserToProject from '../components/pages/AddUserToProject';
+import GetProject from '../components/pages/GetProject';
+import DashboardPage from '../components/pages/DashboardPage';
+import ProjectView from '../components/pages/Project';
+import ProjectsView from '../components/pages/ProjectsView';
+import EditProject from '../components/pages/EditProject';
+import DashboardView from '../components/pages/DashboardView';
+import DashboardsView from '../components/pages/DashboardsView';
+import DashboardMerge from '../components/pages/DashboardMerge';
+import MergedDashboard from '../components/pages/test';
+import Risks from '../components/pages/Risks';
+import ManageRisk from '../components/pages/manageRisk';
+import LoginPage from '../components/pages/logIn';
+import EditRisk from '../components/pages/editRisk';
+import ProjectListing from '../components/pages/projectListing';
+
 
 
 const ApplicationRoutes: React.FC = () => {
 
   return (
     <Routes>
-      <Route path = "/" element={<LoginPage />} />
       <Route path="/signup" element={<SignUp />} />
+      <Route path="/" element={<LoginPage />} />
       <Route
         path="*"
         element={
@@ -27,13 +41,23 @@ const ApplicationRoutes: React.FC = () => {
               <Routes>
                 <Route path="/home" element={<Home />} />
                 <Route path="/createProject" element={<CreateProject />} />
-                <Route path="/createDashboard" element={<CreateDashboard />} />
+                <Route path="/createDashboard/:projectId" element={<CreateDashboard />} />
                 <Route path="/createSubcategories" element={<CreateSubcategories />} />
-                <Route path="/createProjectListing" element={<ProjectListing />} />
-                <Route path="/createManageDashboard" element={<ManageDashboard />} />
                 <Route path="/createRisk" element={<CreateRisk />} />
-                <Route path="/createManageRisk" element={<ManageRisk />} />
-                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/manageRisk" element={<ManageRisk />} />
+                <Route path="/CreateUser" element={<CreateUser />} />
+                <Route path="/ProjectView/:projectId" element={<ProjectView />} />
+                <Route path="/projects" element={<ProjectsView />} />
+                <Route path="/EditProject/:projectId" element={<EditProject />} />
+                <Route path="/dashboardView/:dashboardId" element={<DashboardView />} />
+                <Route path="/DashboardMerge/:dashboardId" element={<DashboardMerge />} />
+                <Route path="/projectListing" element={<ProjectListing />} />
+                <Route path="/dashboardsView/" element={<DashboardsView />} />
+                <Route path="/editRisk" element={<EditRisk />} />
+                <Route path="/MergedDashboard" element={<MergedDashboard />} />
+                <Route path="/Risks/:projectId" element={<Risks />} />
+                
+
               </Routes>
             </MainLayout>
         }

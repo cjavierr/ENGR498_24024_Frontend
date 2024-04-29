@@ -1,11 +1,21 @@
 import React from 'react';
 import { Menu} from 'antd';
 import {
-    HomeOutlined,
-    ProjectOutlined,
+    AppstoreOutlined,
+    ContainerOutlined,
+    DesktopOutlined,
+    MailOutlined,
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+    PieChartOutlined,
     UnorderedListOutlined,
+    HomeOutlined,
+    ProfileOutlined,
+    UserAddOutlined
+    
   } from '@ant-design/icons';
-import {useNavigate}  from 'react-router';
+import {useNavigate}  from 'react-router-dom';
+
 const SideNav = () => {
     const history = useNavigate();
 
@@ -18,11 +28,11 @@ const SideNav = () => {
     const handleCreateSubCategoriesClick = () => {
         history('/createSubcategories');
     }
-    const handleCreateProjectListingClick = () => {
-        history('/createProjectListing');
+    const handleProjectListingClick = () => {
+        history('/projectListing');
     }
     const handleCreateDashboardClick = () => {
-        history('/createDashboard');
+        history('/CreateDashboard');
     }
     const handleCreateManageDashboardClick = () => {
         history('/createManageDashboard');
@@ -33,9 +43,24 @@ const SideNav = () => {
     const handleCreateManageRiskClick = () => {
         history('/createManageRisk');
     }
+    const handleDashboardsViewClick = () => {
+        history('/dashboardsView');
+    }
+    const handleMergeDashboardClick = () => {
+        history('/mergeDashboard');
+    }
+    const handleCreateUserClick = () => {
+        history('/CreateUser');
+    }
+    const handleProjectViewClick = () => {
+        history('/projects'); // Navigate to the projects route
+    }
+
+    const handleManageRiskClick = () => {
+        history('/manageRisk');
+    }
     return (
         <div style={{background: "#000000" }}>
-
             <div style={{height: "32px", margin: "16px", display: 'flex', alignItems: 'center', justifyContent: 'center',background: "#000000",}}>
                 <img
                     src="/catlogo.jpg" // Update the image URL
@@ -43,40 +68,28 @@ const SideNav = () => {
                     style={{ marginTop: '5%', height: '100%', marginBottom: '0',}}
                 />
             </div>
-
             <Menu  theme="dark" mode="inline" defaultSelectedKeys={['1']} style={{background: "#000000" }}>
                 <Menu.Item key="1" onClick={handleHomeClick} >
                     <HomeOutlined/>
                     <span> Home</span>
                 </Menu.Item>
-                <Menu.Item key="2" onClick={handleCreateProjectClick} >
-                    <ProjectOutlined/>
-                    <span> Create Projects</span>
-                </Menu.Item>
-                <Menu.Item key="3" onClick={handleCreateSubCategoriesClick} >
-                    <UnorderedListOutlined/>
-                    <span> Create Subcategories</span>
-                </Menu.Item>
-                <Menu.Item key="4" onClick={handleCreateDashboardClick} >
-                    <UnorderedListOutlined/>
-                    <span> Create Dashboard</span>
-                </Menu.Item>
-                <Menu.Item key="5" onClick={handleCreateProjectListingClick} >
-                    <UnorderedListOutlined/>
-                    <span> Project Listing</span>
-                </Menu.Item>
-                <Menu.Item key="6" onClick={handleCreateManageDashboardClick} >
-                    <UnorderedListOutlined/>
-                    <span> Manage Dashboards</span>
-                </Menu.Item>
-                <Menu.Item key="7" onClick={handleCreateRiskClick} >
-                    <UnorderedListOutlined/>
-                    <span> Create Risk</span>
-                </Menu.Item>
-                <Menu.Item key="8" onClick={handleCreateManageRiskClick} >
-                    <UnorderedListOutlined/>
-                    <span> Manage Risk</span>
-                </Menu.Item>
+
+            <Menu.Item key="12" onClick={handleProjectViewClick}>
+            <ContainerOutlined />
+            <span> Projects View</span>
+            </Menu.Item>
+            <Menu.Item key="13" onClick={handleDashboardsViewClick}>
+            <ProfileOutlined />
+            <span> Dashboards View</span>
+            </Menu.Item>
+            <Menu.Item key="11" onClick={handleCreateUserClick} >
+            <UserAddOutlined/>
+            <span> Create New User</span>
+            </Menu.Item>
+            <Menu.Item key="14" onClick={handleManageRiskClick} >
+            <UnorderedListOutlined/>
+            <span> Manage my risks</span>
+            </Menu.Item>
             </Menu>
         </div>
     );
