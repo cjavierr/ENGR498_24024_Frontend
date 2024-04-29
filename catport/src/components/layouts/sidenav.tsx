@@ -55,6 +55,10 @@ const SideNav = () => {
     const handleProjectViewClick = () => {
         history('/projects'); // Navigate to the projects route
     }
+
+    const handleManageRiskClick = () => {
+        history('/manageRisk');
+    }
     return (
         <div style={{background: "#000000" }}>
             <div style={{height: "32px", margin: "16px", display: 'flex', alignItems: 'center', justifyContent: 'center',background: "#000000",}}>
@@ -81,6 +85,10 @@ const SideNav = () => {
             <Menu.Item key="11" onClick={handleCreateUserClick} >
             <UserAddOutlined/>
             <span> Create New User</span>
+            </Menu.Item>
+            <Menu.Item key="14" onClick={handleManageRiskClick} >
+            <UnorderedListOutlined/>
+            <span> Manage my risks</span>
             </Menu.Item>
             </Menu>
         </div>

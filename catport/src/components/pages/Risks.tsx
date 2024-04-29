@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { theme, Typography, Table, Button, Select } from "antd";
+import { theme, Typography, Table, Button, Select, Modal } from "antd";
 
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 
@@ -9,7 +9,7 @@ const {Title} = Typography;
 
 interface RiskRecord {
   key: string;
-  recordNumber: string;
+  riskid: string;
   owner: string;
   projectName: string;
   riskNumber: string;
@@ -30,7 +30,6 @@ const Risks = () => {
   const { projectId } = useParams(); // Get the projectId from the URL params
 
   const [loading, setLoading] = useState(true);
-  const [project, setProject] = useState();
   const [currentUser, setCurrentUser] = React.useState<string>('');
   const [visible, setVisible] = React.useState(false);
   const [selectedNote, setSelectedNote] = React.useState('');
@@ -39,7 +38,8 @@ const Risks = () => {
   const navigate = useNavigate();
   
   useEffect(() => {
-
+    const loggedInUser = localStorage.getItem("loggedInUser");
+    setCurrentUser(loggedInUser || "");
     const fetchProject = async () => {
       setLoading(true);
       try {
@@ -48,7 +48,7 @@ const Risks = () => {
           `http://localhost:3001/api/getProjectRisks?projectId=${location.state.projectId}`,
            { withCredentials: true}
         );
-        await setProject(response.data);
+        setData(response.data.risks);
         console.log(response.data);
         setLoading(false);
       } catch (error) {
@@ -65,7 +65,7 @@ const Risks = () => {
        await axios.post('http://localhost:3001/api/escalateRisk', {"riskID": recordNumber },{ withCredentials: true })
        .then((res: any) => console.log(res.data))
        .catch((err: any) => console.error(err));
-       navigate('/manageRisk')
+       window.location.reload();
     } catch (error) {
       console.error(error);
     }
@@ -94,8 +94,8 @@ const Risks = () => {
   const columns = [
     {
       title: 'Record Number',
-      dataIndex: 'recordNumber',
-      key: 'recordNumber',
+      dataIndex: 'riskid',
+      key: 'riskid',
     },
     {
       title: 'Owner',
@@ -149,7 +149,7 @@ const Risks = () => {
       render: ( text: string, record: RiskRecord) => (
         <div>
     <div style={{ marginBottom: '8px' }}>
-        <Button type="primary" onClick={() => escalateRisk(record.recordNumber)}>
+        <Button type="primary" onClick={() => escalateRisk(record.riskid)} disabled={currentUser !== record.owner}>
           escalate
         </Button>
     </div>
@@ -179,9 +179,6 @@ render: (text: string, record: RiskRecord) => (
   if (loading) {
     return <div>Loading...</div>;
   }
-  if (!project) {
-    return <div>Project not found</div>;
-  }
 
   return (
     <>
@@ -195,6 +192,9 @@ render: (text: string, record: RiskRecord) => (
         rowKey="id" // Assuming each risk object has a unique identifier named "id"
         pagination={false} // If you want to disable pagination
       />
+      <Modal title="Notes" visible={visible} onOk={handleOk} onCancel={handleCancel}>
+      <p>{selectedNote}</p>
+    </Modal>
     </>
   );
 };

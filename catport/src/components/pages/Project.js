@@ -78,7 +78,7 @@ const ProjectView = () => {
           )) : null}
         </Descriptions.Item>
         <Descriptions.Item label="KPIs - Qualitative">
-  {project.KPIs.qualitative ? Object.entries(project.KPIs.qualitative).map(([key, value], index) => (
+  {project.KPIs.qualitative ? Object.keys(project.KPIs.qualitative).map((key, index) => (
     <p key={index}>
       {key === 'Risks' ? (
         <span style={{ color: 'blue', cursor: 'pointer' }} onClick={() => handleRiskClick(project.projectID, project.projectName)}>
@@ -87,9 +87,6 @@ const ProjectView = () => {
       ) : (
         key
       )}
-      {value.length > 0 && value.map((item, subIndex) => (
-        <Tag key={subIndex}>{item}</Tag>
-      ))}
     </p>
   )) : null}
 </Descriptions.Item>

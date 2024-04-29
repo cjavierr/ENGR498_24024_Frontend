@@ -10,7 +10,7 @@ const { Option } = Select;
 
 interface RiskRecord {
   key: string;
-  recordNumber: string;
+  riskid: string;
   owner: string;
   projectName: string;
   riskNumber: string;
@@ -150,7 +150,7 @@ const editRisk = (record: RiskRecord) => {
         render: ( text: string, record: RiskRecord) => (
           <div>
       <div style={{ marginBottom: '8px' }}>
-          <Button type="primary" onClick={() => escalateRisk(record.recordNumber)}>
+          <Button type="primary" onClick={() => escalateRisk(record.riskid)} disabled={currentUser !== record.owner}>
             escalate
           </Button>
       </div>
