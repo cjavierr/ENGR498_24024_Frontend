@@ -9,14 +9,22 @@ import {
   Select,
   Input,
   DatePicker,
+  message,
   InputNumber,
   Steps,
+  Space,
 } from "antd";
 import { useParams } from "react-router-dom";
-import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  PlusOutlined,
+  CheckCircleTwoTone,
+  CloseCircleTwoTone,
+} from "@ant-design/icons";
 
 import axios from "axios";
 import { Checkbox } from "antd";
+import Column from "antd/es/table/Column";
 
 const { Option, OptGroup } = Select;
 const { Title } = Typography;
@@ -31,6 +39,9 @@ const DashboardMerge = () => {
   const [error, setError] = useState(null);
   const [usernames, setUsernames] = useState([]);
   const [form] = Form.useForm();
+  const [successMessage, setSuccessMessage] = useState(null);
+  const [mergeable, setMergeable] = useState(false);
+
   const [selectedAction, setSelectedAction] = useState("create");
   const [currentStep, setCurrentStep] = useState(0);
   const [selectedProject, setSelectedProject] = useState("");
@@ -83,32 +94,37 @@ const DashboardMerge = () => {
     const combinedSubcategories = [];
 
     mappedSubcategories.forEach(({ heading, details }) => {
-      const combinedDetails = details.flatMap(detail => {
-        const subcategoryIndex1 = table1.subcategories ? table1.subcategories.indexOf(detail) : -1;
-        const subcategoryIndex2 = table2.subcategories ? table2.subcategories.indexOf(detail) : -1;
-        const subcategoryData1 = subcategoryIndex1 !== -1 ? table1.data[subcategoryIndex1] : [];
-        const subcategoryData2 = subcategoryIndex2 !== -1 ? table2.data[subcategoryIndex2] : [];
+      const combinedDetails = details.flatMap((detail) => {
+        const subcategoryIndex1 = table1.subcategories
+          ? table1.subcategories.indexOf(detail)
+          : -1;
+        const subcategoryIndex2 = table2.subcategories
+          ? table2.subcategories.indexOf(detail)
+          : -1;
+        const subcategoryData1 =
+          subcategoryIndex1 !== -1 ? table1.data[subcategoryIndex1] : [];
+        const subcategoryData2 =
+          subcategoryIndex2 !== -1 ? table2.data[subcategoryIndex2] : [];
         return subcategoryData1.concat(subcategoryData2);
       });
       combinedSubcategories.push({ heading, details: combinedDetails });
     });
-  
+
     const mergedTable = [
-      {kpi: "",
-      data: [],
-      periods: 0,
-      project: "",
-      startDate: "Today",
-      subcategories:[""],
-      timePhase: ""
-    },
+      {
+        kpi: "",
+        data: [],
+        periods: 0,
+        project: "",
+        startDate: "Today",
+        subcategories: [""],
+        timePhase: "",
+      },
     ];
     let date = new Date().toJSON();
 
-    return {date: date, tables: mergedTable};
+    return { date: date, tables: mergedTable };
   };
-  
-  
 
   // Usage example
 
@@ -162,64 +178,162 @@ const DashboardMerge = () => {
 
     console.log(selectedDashboards);
 
-    const table1 = await axios.post(
-        "http://localhost:3001/api/getDashboard",
-        {
-          dashboardID: selectedDashboards[0],
-        }
-    );
+    const table1 = await axios.post("http://localhost:3001/api/getDashboard", {
+      dashboardID: selectedDashboards[0],
+    });
 
-    const table2 = await axios.post(
-        "http://localhost:3001/api/getDashboard",
-        {
-          dashboardID: selectedDashboards[1],
-        }
-    );
+    const table2 = await axios.post("http://localhost:3001/api/getDashboard", {
+      dashboardID: selectedDashboards[1],
+    });
 
-    const table1version = table1.data.versions.reduce(
-      (prev, current) => {
-        return new Date(current.date) > new Date(prev.date)
-          ? current
-          : prev;
-      }
-    );
+    console.log("table1", table1);
 
-    const table2version = table1.data.versions.reduce(
-      (prev, current) => {
-        return new Date(current.date) > new Date(prev.date)
-          ? current
-          : prev;
-      }
-    );
+    const processedTable1 = convertToTwoDeeArray(table1.data);
+    const processedTable2 = convertToTwoDeeArray(table2.data);
+    const categories1 = grabLabels(table1.data);
+    const categories2 = grabLabels(table2.data);
+    console.log("categories", categories1);
 
-    console.log(table1version);
-    console.log(table2version);
-    const mergedDashboard = mergeTables(table1version.tables, table2version.tables, mappedKPIs);
-    console.log(mergedDashboard);
+    const { result, labels } = combineMappedKPIs(
+      mappedKPIs,
+      processedTable1,
+      processedTable2,
+      categories1,
+      categories2
+    );
+    console.log(result);
+    console.log(labels);
+
+    let date = new Date().toJSON();
+
+    console.log(table1);
+
+    const mostRecentVersion = table1.data.versions.reduce((prev, current) => {
+      return new Date(current.date) > new Date(prev.date) ? current : prev;
+    });
+
+    console.log(mostRecentVersion);
+
+    const newTable = {
+      project: table1.data.project,
+      kpi: mostRecentVersion.tables[0].kpi,
+      data: formatArrayToDataObject(result),
+      timePhase: mostRecentVersion.tables[0].timePhase,
+      subcategories: labels,
+      periods: mostRecentVersion.tables[0].periods,
+      startDate: mostRecentVersion.tables[0].startDate,
+      columnLabels: mostRecentVersion.tables[0].columnLabels,
+    };
+
+    const mergedDashboard = {
+      date: date,
+      tables: [newTable],
+    };
 
     const orgAdmin = form.getFieldValue("orgadmin");
     const updatedDashboard = {
-      ownerid: username,
-      users: [
-        { role: "orgadmin", username: orgAdmin },
-        { role: "owner", username: username },
-      ], // Assuming admin is an array
+      owner: username,
+      users: [orgAdmin, username], // Assuming admin is an array
       versions: [mergedDashboard], // Update with actual version data
       dashboards: selectedDashboards,
       dashboardName: dashboardName,
       escalate: false, // Update with actual escalation status
-      project: selectedProject,
-      mappedKPIs: mappedKPIs,
+      project: table1.data.project,
     };
 
     console.log("Updated Dashboard:", updatedDashboard);
 
-    // Now you can use the updatedDashboard object as needed, such as sending it to the backend
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/api/createNewDashboard",
+        {
+          ...updatedDashboard,
+        }
+      );
+      message.success(response.data.message);
+      setSuccessMessage(response.data.message);
+      setError(null);
+      window.location.href = "/dashboardsView";
+    } catch (error) {}
   };
+
+  function formatArrayToDataObject(array) {
+    return array.map((innerArray) =>
+      innerArray.map((value) => ({ value: value.toString() }))
+    );
+  }
+
+  function convertToTwoDeeArray(table) {
+    const mostRecentVersion = table.versions.reduce((prev, current) => {
+      return new Date(current.date) > new Date(prev.date) ? current : prev;
+    });
+
+    // Extract the most recent data and convert it to integers
+    const flattenedArray = mostRecentVersion.tables[0].data.map((innerArray) =>
+      innerArray.map((obj) => parseInt(obj.value))
+    );
+
+    // Extract subcategorie
+    return flattenedArray;
+  }
+
+  function grabLabels(table) {
+    const mostRecentVersion = table.versions.reduce((prev, current) => {
+      return new Date(current.date) > new Date(prev.date) ? current : prev;
+    });
+
+    // Extract subcategories
+    const subcategories = mostRecentVersion.tables[0].subcategories;
+
+    return subcategories;
+  }
+
+  function combineMappedKPIs(mappedKPIs, array1, array2, label1, label2) {
+    const result = [];
+    const labels = [];
+
+    for (const currkpi in mappedKPIs) {
+      labels.push(mappedKPIs[currkpi].heading);
+      const currkpiArray = [];
+      result.push(currkpiArray);
+
+      for (var j = 0; j < label1.length; j++) {
+        if (mappedKPIs[currkpi].details.indexOf(label1[j]) !== -1) {
+          currkpiArray.push(array1[j]);
+        }
+      }
+    }
+
+    for (const currkpi in mappedKPIs) {
+      for (var j = 0; j < label2.length; j++) {
+        if (mappedKPIs[currkpi].details.indexOf(label2[j]) !== -1) {
+          result[currkpi].push(array2[j]);
+        }
+      }
+    }
+
+    for (let x = 0; x < result.length; x++) {
+      const newRow = []; // Initialize newRow as an empty array for each iteration
+      let currColumn = 0;
+      for (let j = 0; j < result[x][0].length; j++) {
+        currColumn = 0;
+        for (let i = 0; i < result.length; i++) {
+          if (!isNaN(result[x][i][j])) {
+            // Check if the value is not NaN
+            currColumn += result[x][i][j];
+          }
+        }
+        newRow.push(currColumn);
+      }
+      result[x] = newRow;
+    }
+
+    return { result, labels };
+  }
 
   const handleDashboardChange = async (selected) => {
     setSelectedDashboards(selected);
-    console.log(selected);
+    console.log("Selected Dashboards", selected);
     try {
       const response = await axios.post(
         "http://localhost:3001/api/getDashboard",
@@ -227,13 +341,7 @@ const DashboardMerge = () => {
           dashboardID: dashboardId,
         }
       );
-      console.log("Fetching project: ", response.data.project);
-      console.log(response.data.project);
-
-      const project = await axios.post("http://localhost:3001/api/getProject", {
-        projectId: response.data.project,
-      });
-      console.log(project);
+      console.log("Fetching dashboard: ", response.data);
 
       //   const updatedDashboard = {
       //     ownerid: response.data.ownerid, // Replace with the actual user ID
@@ -258,6 +366,11 @@ const DashboardMerge = () => {
       //   } catch (error) {
       //     console.error("Error Updating Dashboard", error);
       //   }
+
+      const project = await axios.post("http://localhost:3001/api/getProject", {
+        projectId: response.data.project,
+      });
+      console.log(project);
       setSubcategories(project.data.subcategories);
       console.log("SUBCATS");
       console.log(project.data.subcategories);
@@ -363,6 +476,21 @@ const DashboardMerge = () => {
             ))}
           </Select>
         </Form.Item>
+        <Space align="baseline">
+          <Title level={4}>Mergeable: </Title>
+          {mergeable ? (
+          <CheckCircleTwoTone
+          twoToneColor="#52c41a"
+          style={{ fontSize: "18px" }}
+        />
+          ):(
+            <CloseCircleTwoTone
+            twoToneColor="#eb2f96"
+            style={{ fontSize: "18px" }}
+          />
+          )}
+
+        </Space>
         <Form.Item>
           <Checkbox onChange={onCheckboxChange}>
             Allow higher level access
