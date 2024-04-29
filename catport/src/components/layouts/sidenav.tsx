@@ -76,6 +76,10 @@ const SideNav = () => {
     history("/editKPIs");
   };
 
+  const handleManageRiskClick = () => {
+    history("/manageRisk");
+  }
+
   return (
     <div style={{ background: "#000000" }}>
       <div
@@ -127,6 +131,11 @@ const SideNav = () => {
                 <ProfileOutlined />
                 <span> Dashboards View</span>
               </Menu.Item>
+              <Menu.Item key="14" onClick={handleManageRiskClick}>
+                <UnorderedListOutlined />
+                <span> Manage my Risk</span>
+              </Menu.Item>
+
             </>
           )}
         </>
