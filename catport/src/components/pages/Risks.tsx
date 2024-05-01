@@ -45,7 +45,7 @@ const Risks = () => {
       try {
         // Fetch the project details from the backend using projectId
         const response = await axios.get(
-          `http://localhost:3001/api/getProjectRisks?projectId=${location.state.projectId}`,
+          `https://24024be.vercel.app/api/getProjectRisks?projectId=${location.state.projectId}`,
            { withCredentials: true}
         );
         setData(response.data.risks);
@@ -62,7 +62,7 @@ const Risks = () => {
 
   const escalateRisk = async (recordNumber: string) => {
     try {
-       await axios.post('http://localhost:3001/api/escalateRisk', {"riskID": recordNumber },{ withCredentials: true })
+       await axios.post('https://24024be.vercel.app/api/escalateRisk', {"riskID": recordNumber },{ withCredentials: true })
        .then((res: any) => console.log(res.data))
        .catch((err: any) => console.error(err));
        window.location.reload();
@@ -93,7 +93,7 @@ const Risks = () => {
 
   const deleteRisk = async (riskid : string) => {
     try {
-      const response = await axios.post('http://localhost:3001/api/deleteRisk', {"riskid" : riskid}, { withCredentials: true });
+      const response = await axios.post('https://24024be.vercel.app/api/deleteRisk', {"riskid" : riskid}, { withCredentials: true });
     } catch (error) {
       console.error(error);
     }

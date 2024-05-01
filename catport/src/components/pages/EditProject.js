@@ -118,7 +118,7 @@ const EditProject = () => {
       setLoading(true);
       try {
         const response = await axios.post(
-          "http://localhost:3001/api/getProject",
+          "https://24024be.vercel.app/api/getProject",
           {
             projectId: projectId,
           }
@@ -163,7 +163,7 @@ const EditProject = () => {
     try {
       setLoading(true);
       // Send a request to update the project details
-      await axios.post("http://localhost:3001/api/saveProject", {
+      await axios.post("https://24024be.vercel.app/api/saveProject", {
         projectID: projectId,
         projectDescription: values.projectDescription,
         projectName: values.projectName,

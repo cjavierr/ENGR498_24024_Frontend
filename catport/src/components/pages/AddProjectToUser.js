@@ -11,7 +11,7 @@ function AddProjectToUser() {
     e.preventDefault();
 
     try {
-      const response = await axios.put(`http://localhost:3001/api/users/addproject`, {
+      const response = await axios.put(`https://24024be.vercel.app/api/users/addproject`, {
         userid: userId,
         projectid: projectId,
       });

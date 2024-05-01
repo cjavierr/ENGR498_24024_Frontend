@@ -16,7 +16,7 @@ const DashboardsView = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          "http://localhost:3001/api/userDashboards",
+          "https://24024be.vercel.app/api/userDashboards",
           {
             params: {
               username: username,
@@ -52,7 +52,7 @@ const DashboardsView = () => {
   const confirmDeleteDashboard = async () => {
     try {
       // Call backend API to delete dashboard
-      await axios.post(`http://localhost:3001/api/deleteDashboard`, {
+      await axios.post(`https://24024be.vercel.app/api/deleteDashboard`, {
         dashid: deletingDashboardId,
       });
       message.success("Dashboard deleted successfully");

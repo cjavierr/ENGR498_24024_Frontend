@@ -21,7 +21,7 @@ const CreateRisk: React.FC = () => {
   React.useEffect(() => {
     const getProject = async () => {
       try {
-        const response = await axios.post(`http://localhost:3001/api/getProject`, {"projectId" : projectID,}, { withCredentials: true });
+        const response = await axios.post(`https://24024be.vercel.app/api/getProject`, {"projectId" : projectID,}, { withCredentials: true });
         const project = response.data;
         setProjectName(project.projectName);
       } catch (error) {
@@ -33,7 +33,7 @@ const CreateRisk: React.FC = () => {
   },);
 
   const onFinish = (values: any) => { 
-    axios.post('http://localhost:3001/api/addRisk', {"newEntry" : values,
+    axios.post('https://24024be.vercel.app/api/addRisk', {"newEntry" : values,
       "projectID": projectID,
     }, { withCredentials: true })
       .then((res: any) => console.log(res.data))

@@ -19,7 +19,7 @@ const ProjectView = () => {
       try {
         // Fetch the project details from the backend using projectId
         const response = await axios.post(
-          "http://localhost:3001/api/getProject",
+          "https://24024be.vercel.app/api/getProject",
           {
             projectId: projectId,
           }

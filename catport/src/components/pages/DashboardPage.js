@@ -20,7 +20,7 @@ const DashboardPage = () => {
   
       try {
         console.log("attempting to make post request");
-        const response = await axios.post('http://localhost:3001/api/getUser', {
+        const response = await axios.post('https://24024be.vercel.app/api/getUser', {
           username: username, // Send username in request body
         });
         console.log(response);
@@ -42,7 +42,7 @@ const DashboardPage = () => {
     setError(null);
 
     try {
-      const response = await axios.post('http://localhost:3001/api/getDashboard', { dashboardID: dashboardId });
+      const response = await axios.post('https://24024be.vercel.app/api/getDashboard', { dashboardID: dashboardId });
       setDashboardData(response.data);
     } catch (error) {
       setError('Error fetching dashboard');
@@ -89,7 +89,7 @@ const DashboardPage = () => {
 
   const handleSave = async () => {
     try {
-      await axios.post('http://localhost:3001/api/saveDashboard', { dashboardData });
+      await axios.post('https://24024be.vercel.app/api/saveDashboard', { dashboardData });
       alert('Changes saved successfully!');
     } catch (error) {
       console.error('Error saving dashboard:', error);

@@ -15,7 +15,7 @@ const ProjectDetails = ({ initialProjectId = "" }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/getProject",
+        "https://24024be.vercel.app/api/getProject",
         { projectId }
       );
       console.log(response.data);

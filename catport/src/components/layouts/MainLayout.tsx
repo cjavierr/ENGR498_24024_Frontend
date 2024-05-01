@@ -32,6 +32,12 @@ const MainLayout: React.FC<LayoutProps> = ({ children }) => {
     event.preventDefault();
     collapse ? setCollapse(false) : setCollapse(true);
   };
+  
+  const handleNameClick = () => {
+    document.cookie = 'firstName=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    history('/');
+  }
 
   return (
     <Layout >
@@ -53,7 +59,7 @@ const MainLayout: React.FC<LayoutProps> = ({ children }) => {
           </div>
           <div>
             <Avatar size="small" icon={<UserOutlined />} style={{ backgroundColor: '#1890ff', marginRight: '20px' }} />
-            <a href="/login" style={{ color: 'white', paddingRight: '30px' }}>{username}</a>
+            <a onClick={handleNameClick} style={{ color: 'white', paddingRight: '30px' }}>{username}</a>
             </div>
         </Header>
         <Content style={{ margin: '24px 16px', padding: 24, minHeight: "calc(100vh - 114px)", background: "#fff" }}>

@@ -19,7 +19,7 @@ const ProjectsView = () => {
       setLoading(true);
       try {
         const response = await axios.get(
-          "http://localhost:3001/api/userProjects",
+          "https://24024be.vercel.app/api/userProjects",
           {
             params: {
               userName: username,
@@ -53,7 +53,7 @@ const ProjectsView = () => {
   const confirmDeleteProject = async () => {
     try {
       // Call backend API to delete project
-      await axios.post(`http://localhost:3001/api/deleteProject`, {
+      await axios.post(`https://24024be.vercel.app/api/deleteProject`, {
         projectId: deletingProjectId,
       });
       message.success("Project deleted successfully");

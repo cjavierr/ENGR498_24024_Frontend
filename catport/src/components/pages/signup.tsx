@@ -53,7 +53,7 @@ const SignUp: React.FC = () => {
 
     const handleSubmit = async (values: any) => {
         try {
-            const response = await axios.post('http://localhost:3001/api/newuser', values, {
+            const response = await axios.post('https://24024be.vercel.app/api/newuser', values, {
               withCredentials: true
           });
             console.log('Received response from server: ', response.data);

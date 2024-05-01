@@ -11,7 +11,7 @@ function GetUser() {
 
     try {
       console.log("attempting to make post request");
-      const response = await axios.post('http://localhost:3001/api/getUser', {
+      const response = await axios.post('https://24024be.vercel.app/api/getUser', {
         username: username, // Send username in request body
       });
       console.log(response);

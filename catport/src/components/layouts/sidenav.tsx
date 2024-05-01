@@ -24,7 +24,7 @@ const SideNav = () => {
   useEffect(() => {
     const fetchUser = async () => {
       const username = localStorage.getItem("loggedInUser");
-      const response = await axios.post("http://localhost:3001/api/getUser", {
+      const response = await axios.post("https://24024be.vercel.app/api/getUser", {
         username: username, // Send username in request body
       });
       if (!response.data.isAdmin) {
@@ -93,7 +93,7 @@ const SideNav = () => {
         }}
       >
         <img
-          src="/catlogo.jpg" // Update the image URL
+          src={process.env.PUBLIC_URL + '/catlogo.jpg'}
           alt="Logo"
           style={{ marginTop: "5%", height: "100%", marginBottom: "0" }}
         />

@@ -23,7 +23,7 @@ const CreateRisk: React.FC = () => {
   const onFinish = (values: any) => {
     values.viewers = viewers;
     values.owner = owner;
-    axios.post('http://localhost:3001/api/editRisk', {"newEntry" : values,
+    axios.post('https://24024be.vercel.app/api/editRisk', {"newEntry" : values,
     }, { withCredentials: true })
       .then((res: any) => console.log(res.data))
       .catch((err: any) => console.error(err));

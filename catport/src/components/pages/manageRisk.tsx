@@ -54,8 +54,7 @@ const editRisk = (record: RiskRecord) => {
 };
 
   React.useEffect(() => {
-    const cookies = cookie.parse(document.cookie);
-    const firstName = cookies.firstName;
+    const firstName = localStorage.getItem("loggedInUser") ?? '';
     setCurrentUser(firstName);
     console.log('currentUser:', currentUser)
     }, [currentUser]);
@@ -63,7 +62,7 @@ const editRisk = (record: RiskRecord) => {
 
   const getRisks = async () => {
     try {
-      const response = await axios.get('http://localhost:3001/api/getRisks', { withCredentials: true });
+      const response = await axios.get('https://24024be.vercel.app/api/getRisks', { withCredentials: true });
       return response.data;
     } catch (error) {
       console.error(error);
@@ -72,14 +71,14 @@ const editRisk = (record: RiskRecord) => {
 
   const deleteRisk = async (riskid : string) => {
     try {
-      const response = await axios.post('http://localhost:3001/api/deleteRisk', {"riskid" : riskid}, { withCredentials: true });
+      const response = await axios.post('https://24024be.vercel.app/api/deleteRisk', {"riskid" : riskid}, { withCredentials: true });
     } catch (error) {
       console.error(error);
     }
   }
   const escalateRisk = async (recordNumber: string) => {
     try {
-       await axios.post('http://localhost:3001/api/escalateRisk', {"riskID": recordNumber },{ withCredentials: true })
+       await axios.post('https://24024be.vercel.app/api/escalateRisk', {"riskID": recordNumber },{ withCredentials: true })
        .then((res: any) => console.log(res.data))
        .catch((err: any) => console.error(err));
        navigate('/manageRisk')

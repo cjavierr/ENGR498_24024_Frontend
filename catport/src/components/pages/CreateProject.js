@@ -73,7 +73,7 @@ function CreateProject() {
     console.log("sending to server");
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/createNewProject",
+        "https://24024be.vercel.app/api/createNewProject",
         {
           ...compiledData,
         }
@@ -95,7 +95,7 @@ function CreateProject() {
 
     try {
       console.log("Grabbing user info");
-      const response = await axios.post("http://localhost:3001/api/getUser", {
+      const response = await axios.post("https://24024be.vercel.app/api/getUser", {
         username: username, // Send username in request body
       });
       console.log(response);
@@ -113,7 +113,7 @@ function CreateProject() {
   const fetchUsernames = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3001/api/allUsernames"
+        "https://24024be.vercel.app/api/allUsernames"
       );
       setUsernames(response.data);
     } catch (error) {
@@ -126,7 +126,7 @@ const fetchGlossary = async () =>{
   console.log("Grabbing company glossary");
   try {
     const response = await axios.get(
-      "http://localhost:3001/api/getCompanyGlossary"
+      "https://24024be.vercel.app/api/getCompanyGlossary"
     );
     console.log(response.data.quantitativekpis);
     const preprocess = response.data.quantitativekpis.map(obj => obj.Title);

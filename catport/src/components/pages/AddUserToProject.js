@@ -10,7 +10,7 @@ function AddUserToProject() {
   const handleSubmit = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.put('http://localhost:3001/api/projects/adduser', { projectId, userId, role });
+      const response = await axios.put('https://24024be.vercel.app/api/projects/adduser', { projectId, userId, role });
       setMessage(response.data.message);
     } catch (error) {
       setMessage('Error adding user to project');

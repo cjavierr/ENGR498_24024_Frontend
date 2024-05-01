@@ -32,7 +32,7 @@ function CreateUser() {
   const handleSubmit = async (values) => {
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/newuser",
+        "https://24024be.vercel.app/api/newuser",
         values
       );
       message.success(response.data.message);
@@ -50,7 +50,7 @@ function CreateUser() {
     const fetchUsernames = async () => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/api/allUsernames"
+          "https://24024be.vercel.app/api/allUsernames"
         );
         setUsernames(response.data);
         console.log(response.data);
@@ -62,7 +62,7 @@ function CreateUser() {
     const fetchCompanyOrganization = async() => {
       try {
         const response = await axios.get(
-          "http://localhost:3001/api/getOrganizationGlossary"
+          "https://24024be.vercel.app/api/getOrganizationGlossary"
         );
         // setDepartments(response.data);
         console.log(response.data);

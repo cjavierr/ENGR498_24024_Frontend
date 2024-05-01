@@ -78,7 +78,7 @@ function CreateDashboard() {
     try {
       // Fetch the project details from the backend using projectId
       const response = await axios.post(
-        "http://localhost:3001/api/getProject",
+        "https://24024be.vercel.app/api/getProject",
         {
           projectId: projectId,
         }
@@ -111,7 +111,7 @@ function CreateDashboard() {
 
       console.log(dashboardDetails);
       const response = await axios.post(
-        "http://localhost:3001/api/createNewDashboard",
+        "https://24024be.vercel.app/api/createNewDashboard",
         {
           ...dashboardDetails,
         }
@@ -133,7 +133,7 @@ function CreateDashboard() {
 
     try {
       console.log("Grabbing user info");
-      const response = await axios.post("http://localhost:3001/api/getUser", {
+      const response = await axios.post("https://24024be.vercel.app/api/getUser", {
         username: username, // Send username in request body
       });
       console.log(response);
@@ -153,7 +153,7 @@ function CreateDashboard() {
   const fetchUsernames = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3001/api/allUsernames"
+        "https://24024be.vercel.app/api/allUsernames"
       );
       setUsernames(response.data);
     } catch (error) {

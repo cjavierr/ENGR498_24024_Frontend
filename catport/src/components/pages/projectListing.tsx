@@ -28,7 +28,7 @@ const ProjectListing: React.FC = () => {
   React.useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/api/readUserProjects', { withCredentials: true });
+        const response = await axios.get('https://24024be.vercel.app/api/readUserProjects', { withCredentials: true });
         setData(response.data.projectRecords);
       } catch (error) {
         console.error('Error fetching data: ', error);

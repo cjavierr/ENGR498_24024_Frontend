@@ -71,7 +71,7 @@ const DashboardView = () => {
       try {
         // Fetch the dashboard details from the backend using dashboardId
         const response = await axios.post(
-          "http://localhost:3001/api/getDashboard",
+          "https://24024be.vercel.app/api/getDashboard",
           {
             dashboardID: dashboardId,
           }
@@ -137,7 +137,7 @@ const DashboardView = () => {
     let date = new Date().toJSON();
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/getDashboard",
+        "https://24024be.vercel.app/api/getDashboard",
         {
           dashboardID: dashboardId,
         }
@@ -159,7 +159,7 @@ const DashboardView = () => {
       };
 
       const updateResponse = await axios.post(
-        "http://localhost:3001/api/saveDashboard",
+        "https://24024be.vercel.app/api/saveDashboard",
         {
           ...updatedDashboard,
         }

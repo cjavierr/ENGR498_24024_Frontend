@@ -12,7 +12,7 @@ const LoginPage: React.FC = () => {
   
   const onFinish = async (values: any) => {
       try {
-          const response = await axios.post('http://localhost:3001/api/login', {
+          const response = await axios.post('https://24024be.vercel.app/api/login', {
               username: values.username,
               password: values.password
           }, {

@@ -69,7 +69,7 @@ const DashboardMerge = () => {
 
     try {
       console.log("Grabbing user info");
-      const response = await axios.post("http://localhost:3001/api/getUser", {
+      const response = await axios.post("https://24024be.vercel.app/api/getUser", {
         username: username, // Send username in request body
       });
       console.log(response);
@@ -178,11 +178,11 @@ const DashboardMerge = () => {
 
     console.log(selectedDashboards);
 
-    const table1 = await axios.post("http://localhost:3001/api/getDashboard", {
+    const table1 = await axios.post("https://24024be.vercel.app/api/getDashboard", {
       dashboardID: selectedDashboards[0],
     });
 
-    const table2 = await axios.post("http://localhost:3001/api/getDashboard", {
+    const table2 = await axios.post("https://24024be.vercel.app/api/getDashboard", {
       dashboardID: selectedDashboards[1],
     });
 
@@ -245,7 +245,7 @@ const DashboardMerge = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/createNewDashboard",
+        "https://24024be.vercel.app/api/createNewDashboard",
         {
           ...updatedDashboard,
         }
@@ -336,7 +336,7 @@ const DashboardMerge = () => {
     console.log("Selected Dashboards", selected);
     try {
       const response = await axios.post(
-        "http://localhost:3001/api/getDashboard",
+        "https://24024be.vercel.app/api/getDashboard",
         {
           dashboardID: dashboardId,
         }
@@ -355,7 +355,7 @@ const DashboardMerge = () => {
       //   };
 
       //     const updateResponse = await axios.post(
-      //       "http://localhost:3001/api/saveDashboard",
+      //       "https://24024be.vercel.app/api/saveDashboard",
       //       {
       //         ...updatedDashboard,
       //       }
@@ -367,7 +367,7 @@ const DashboardMerge = () => {
       //     console.error("Error Updating Dashboard", error);
       //   }
 
-      const project = await axios.post("http://localhost:3001/api/getProject", {
+      const project = await axios.post("https://24024be.vercel.app/api/getProject", {
         projectId: response.data.project,
       });
       console.log(project);
@@ -416,7 +416,7 @@ const DashboardMerge = () => {
   const fetchUsernames = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:3001/api/allUsernames"
+        "https://24024be.vercel.app/api/allUsernames"
       );
       setUsernames(response.data);
     } catch (error) {
