@@ -64,9 +64,10 @@ function CreateUser() {
         const response = await axios.get(
           "https://24024be.vercel.app/api/getOrganizationGlossary"
         );
-        // setDepartments(response.data);
+        const departmentNames = response.data.Departments.map(department => department.Name);
+        setDepartments(departmentNames);
         console.log(response.data);
-        const departs = getAllFieldNames(response.data.Departments);
+        const departs = getAllFieldNames(response.data.Departments.lower);
         console.log(departs);
       } catch (error) {
         console.log(error);
