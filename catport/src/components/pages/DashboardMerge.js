@@ -14,7 +14,7 @@ import {
   Steps,
   Space,
 } from "antd";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import {
   DeleteOutlined,
   PlusOutlined,
@@ -62,6 +62,7 @@ const DashboardMerge = () => {
   const [expandedGroups, setExpandedGroups] = useState([]);
   const [mappedSubcategoryName, setMappedSubcategoryName] = useState("");
   const [showHigherLevelOrgName, setShowHigherLevelOrgName] = useState(false);
+  const navigate = useNavigate();
 
   const fetchData = async () => {
     const username = localStorage.getItem("loggedInUser");
@@ -253,7 +254,7 @@ const DashboardMerge = () => {
       message.success(response.data.message);
       setSuccessMessage(response.data.message);
       setError(null);
-      window.location.href = "/dashboardsView";
+      navigate("/dashboardsView")
     } catch (error) {}
   };
 

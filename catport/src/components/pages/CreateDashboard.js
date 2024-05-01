@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import Spreadsheet, { CellBase } from "react-spreadsheet";
 import axios from "axios";
 import "../../App.css"; // Import the CSS file
@@ -119,7 +119,7 @@ function CreateDashboard() {
       message.success(response.data.message);
       setSuccessMessage(response.data.message);
       setError(null);
-      window.location.href = "/dashboardsView";
+      navigate("/dashboardsView")
 
       //backend shit here
     } catch (error) {

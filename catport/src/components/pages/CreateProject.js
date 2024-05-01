@@ -17,7 +17,7 @@ import {
   message
 } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import { useHistory } from "react-router";
+import { useNavigate } from "react-router";
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -38,10 +38,12 @@ function CreateProject() {
   const [usernames, setUsernames] = useState([]);
   const [quantitativeKPIOptions, setquantitativekpioptions] = useState([]);
   const [qualitativeKPIOptions, setqualitativekpioptions] = useState([]);
+  const navigate = useNavigate();
 
 
   const onFinish = async (values) => {
     console.log("Submitting Form");
+
     const formData = stepForm.getFieldsValue(true);
     const subcats = subfieldform.getFieldsValue(true);
     let date = new Date().toJSON();
@@ -81,7 +83,7 @@ function CreateProject() {
       message.success(response.data.message);
       setSuccessMessage(response.data.message);
       setError(null);
-      window.location.href = "/projects";
+      navigate("/projects")
       // Optionally clear form fields or navigate to a different page
     } catch (error) {
       console.error("Error creating project:", error);

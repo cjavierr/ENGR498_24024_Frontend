@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Table, Space, Button, Modal, message } from "antd";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const DashboardsView = () => {
   const [dashboards, setDashboards] = useState([]);
@@ -42,7 +42,7 @@ const DashboardsView = () => {
       console.log("Deleting: ", dashboardID);
       setDeletingDashboardId(dashboardID);
       setDeleteConfirmVisible(true);
-      window.location.href = "/dashboardsView";
+      Navigate("/dashboardsView")
     } catch (error) {
       console.error("Error deleting dashboard:", error);
       message.error("Failed to delete dashboard");
