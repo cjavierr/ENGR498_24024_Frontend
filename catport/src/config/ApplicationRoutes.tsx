@@ -25,6 +25,7 @@ import ManageRisk from '../components/pages/manageRisk';
 import LoginPage from '../components/pages/logIn';
 import EditRisk from '../components/pages/editRisk';
 import ProjectListing from '../components/pages/projectListing';
+import EditKPIs from '../components/pages/EditKPIs';
 
 
 
@@ -56,6 +57,7 @@ const ApplicationRoutes: React.FC = () => {
                 <Route path="/editRisk" element={<EditRisk />} />
                 <Route path="/MergedDashboard" element={<MergedDashboard />} />
                 <Route path="/Risks/:projectId" element={<Risks />} />
+                <Route path='/editKPIs' element={<EditKPIs />} />
                 
 
               </Routes>
