@@ -12,7 +12,7 @@ import {
   Row,
   Select,
 } from 'antd';
-import { useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 const { Option } = Select;

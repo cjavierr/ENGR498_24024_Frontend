@@ -17,7 +17,7 @@ import {
   message
 } from "antd";
 import FormItem from "antd/es/form/FormItem";
-import { useNavigate } from "react-router";
+import { useNavigate } from "react-router-dom";
 
 const { Option } = Select;
 const { TextArea } = Input;
