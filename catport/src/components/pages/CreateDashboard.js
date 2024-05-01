@@ -54,6 +54,7 @@ function CreateDashboard() {
   const [startDate, setStartDate] = useState(null);
   const [timePhase, setTimePhase] = useState(null);
   const [usernames, setUsernames] = useState([]);
+  const navigate = useNavigate();
 
   const dashboardStyle = {
     display: "flex",

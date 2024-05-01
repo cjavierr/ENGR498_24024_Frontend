@@ -8,6 +8,7 @@ const DashboardsView = () => {
   const [loading, setLoading] = useState(false);
   const [deletingDashboardId, setDeletingDashboardId] = useState(null);
   const [deleteConfirmVisible, setDeleteConfirmVisible] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const username = localStorage.getItem("loggedInUser");
@@ -42,7 +43,7 @@ const DashboardsView = () => {
       console.log("Deleting: ", dashboardID);
       setDeletingDashboardId(dashboardID);
       setDeleteConfirmVisible(true);
-      Navigate("/dashboardsView")
+      navigate("/dashboardsView")
     } catch (error) {
       console.error("Error deleting dashboard:", error);
       message.error("Failed to delete dashboard");
