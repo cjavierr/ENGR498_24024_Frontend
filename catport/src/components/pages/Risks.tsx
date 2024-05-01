@@ -58,7 +58,7 @@ const Risks = () => {
     
     fetchProject();
     setLoading(false);
-  }, );
+  }, []);
 
   const escalateRisk = async (recordNumber: string) => {
     try {
